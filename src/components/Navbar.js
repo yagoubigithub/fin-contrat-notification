@@ -26,41 +26,41 @@ class Navbar extends Component {
 
           <NavLink
             activeClassName="nav-active"
-            to="/maitre_douvrage"
+            to="/ajouter_employee"
             className="nav-link"
           >
             <span className="nav-link-icon">
               <AssignmentIndIcon />
             </span>
 
-            <span>Maitre d'ouvrage</span>
+            <span>Ajouter Employée</span>
           </NavLink>
           <NavLink
             activeClassName="nav-active"
-            to="/phases_projet"
+            to="/employees"
             className="nav-link"
           >
             <span className="nav-link-icon">
               <FormatListNumberedIcon />
             </span>
 
-            <span>Phases du Projet</span>
+            <span>Liste des Employées</span>
           </NavLink>
           <NavLink
             activeClassName="nav-active"
-            to="/projet"
+            to="/ajouter_contrat"
             className="nav-link"
           >
             <span className="nav-link-icon">
               <DomainIcon />
             </span>
 
-            <span>Projet</span>
+            <span>Ajouter Contrat</span>
           </NavLink>
 
           <NavLink
             activeClassName="nav-active"
-            to="/etat_projet"
+            to="/contrats"
             className="nav-link"
           >
             <span className="nav-link-icon">
@@ -68,54 +68,10 @@ class Navbar extends Component {
               <AccessTimeIcon />
             </span>
 
-            <span>Etat de Projet</span>
+            <span>Liste des Contrats</span>
           </NavLink>
 
-          <NavLink
-            activeClassName="nav-active"
-            to="/devis"
-            className="nav-link"
-          >
-            <span className="nav-link-icon">
-              <AssignmentIcon />
-            </span>
-            <span>Devis</span>
-          </NavLink>
-          <NavLink
-            activeClassName="nav-active"
-            to="/facture"
-            className="nav-link"
-          >
-            <span>
-              
-              <DescriptionIcon />
-            </span>
-            <span>Facture</span>
-          </NavLink>
-          <NavLink
-            activeClassName="nav-active"
-            to="/agence"
-            className="nav-link"
-          >
-            <span className="nav-link-icon">
-              
-              <WorkIcon />
-            </span>
-
-            <span> bureau d'étude</span>
-          </NavLink>
-          <NavLink
-            activeClassName="nav-active"
-            to="/statistique"
-            className="nav-link"
-          >
-            <span className="nav-link-icon">
-              
-              <AssessmentIcon />
-            </span>
-
-            <span> Statistique</span>
-          </NavLink>
+        
         </div>
       </nav>
     );

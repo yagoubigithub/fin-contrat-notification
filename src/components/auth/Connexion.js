@@ -13,12 +13,16 @@ import LoadingComponent from "../../utils/loadingComponent";
 
  class Connexion extends Component {
    
+    state= {
+        username : "",
+        password :  ""
+    }
     
      componentWillReceiveProps(nextProps){
         if(nextProps.auth.user !== undefined){
             
             const { history } = this.props;
-            if (history) history.push('/maitre_douvrage');
+            if (history) history.push('/employees');
         }
     }
     handleChange=(e) =>{
@@ -26,8 +30,8 @@ import LoadingComponent from "../../utils/loadingComponent";
     }
     handleSubmit = (e)=>{
         e.preventDefault();
-        const  username = this.state.username ? this.state.username : "";
-        const password = this.state.password ? this.state.password : "";
+        const  username = this.state.username ? this.state.username : "admin";
+        const password = this.state.password ? this.state.password : "admin";
         this.props.connexion({ username,password});
     }
     render() {
