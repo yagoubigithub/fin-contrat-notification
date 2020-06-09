@@ -21,6 +21,7 @@ import "./App.css";
 
 import AjouterEmployee from "./components/ajouter/AjouterEmployee";
 import Employee from "./components/Employee";
+import ModifierEmployee from "./components/modfier/ModifierEmployee";
 
 
 

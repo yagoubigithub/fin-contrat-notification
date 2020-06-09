@@ -34,6 +34,8 @@ import UndoIcon from "@material-ui/icons/Undo";
 import SearchIcon from "@material-ui/icons/Search";
 
 import LoadingComponent from "../../utils/loadingComponent";
+import AjouterEmployee from "../ajouter/AjouterEmployee";
+import ModifierEmployee from "../modfier/ModifierEmployee";
 
 class EmployeeTable extends Component {
   state = {
@@ -45,6 +47,8 @@ class EmployeeTable extends Component {
 
     maitreDouvrageSelected: {},
     selectedAll: false,
+    employee : null,
+    modifierDialog : false,
     
   };
   componentWillReceiveProps(nextProps) {
@@ -68,6 +72,16 @@ class EmployeeTable extends Component {
     }
   }
 
+
+  modifier = (employee) =>{
+    this.setState({ employee});
+    //popup
+    this.handleOpenCloseModifierDialog();
+  }
+
+  handleOpenCloseModifierDialog = () =>{
+    this.setState({ modifierDialog: !this.state.modifierDialog });
+  }
   handleOpenCloseaddToCorbeilleDialog = () => {
     this.setState({ addToCorbeilleDialog: !this.state.addToCorbeilleDialog });
   };
@@ -340,18 +354,7 @@ class EmployeeTable extends Component {
           } else {
             return (
               <div className="cell">
-                <IconButton
-                  size="small"
-                  onClick={() => {
-                    this.handleCloseOpenGallerieVoiture();
-                    this.props.getLogo(props.value);
-                  }}
-                >
-                  <PermMediaIcon
-                    className="black"
-                    fontSize="small"
-                  ></PermMediaIcon>
-                </IconButton>
+            
 
                 <IconButton
                   size="small"
@@ -359,10 +362,12 @@ class EmployeeTable extends Component {
                 >
                   <DeleteIcon className="red" fontSize="small"></DeleteIcon>
                 </IconButton>
-                <IconButton size="small">
-                  <Link to={`/maitre_douvrage/modifier/${props.value}`}>
+                <IconButton size="small"
+                onClick={() => this.modifier(props.original)}
+                >
+                 
                     <EditIcon className="black" fontSize="small"></EditIcon>
-                  </Link>
+                 
                 </IconButton>
               </div>
             );
@@ -437,45 +442,39 @@ class EmployeeTable extends Component {
           open={this.state.addToCorbeilleDialog}
           onClose={this.handleOpenCloseaddToCorbeilleDialog}
         >
-          <h2>Deleted</h2>
+          <h2>Supprimer</h2>
           <button
             onClick={() => {
               this.props.addToCorbeille(this.state.deletedId);
               this.handleOpenCloseaddToCorbeilleDialog();
             }}
           >
-            Delete
+            Supprimer
           </button>
           <button onClick={this.handleOpenCloseaddToCorbeilleDialog}>
             Cancel
           </button>
         </Dialog>
 
+
+
         <Dialog
-          scroll="paper"
-          open={this.state.openGallerie}
-          onClose={this.handleCloseOpenGallerieVoiture}
+          open={this.state.modifierDialog}
+          onClose={this.handleOpenCloseModifierDialog}
+        maxWidth="xl"
         >
-          <DialogContent dividers={true}>
-            <LoadingComponent
-              loading={
-                this.props.loading !== undefined ? this.props.loading : false
-              }
-            />
-            <div>
-              <Grid container>
-                {this.state.logo !== "" ? (
-                  <img
-                    src={this.state.logo}
-                    style={{ width: "100%", maxHeight: 200, height: "100%" }}
-                  />
-                ) : (
-                  <p>No logo</p>
-                )}
-              </Grid>
-            </div>
-          </DialogContent>
+        
+          
+
+
+
+          <ModifierEmployee employee={this.state.employee} />
+          <button onClick={this.handleOpenCloseModifierDialog}>
+            Cancel
+          </button>
         </Dialog>
+
+     
         <div className="table-container">
           {/*
             recherche

@@ -174,3 +174,46 @@ export const undoDeleteEmployee = (id) =>{
   
     }
   }
+
+
+
+  export const modifierEmployee  = (data) =>{
+    return (dispatch,getState) =>{
+      dispatch({
+        type : "LOADING_EMPLOYEE"
+    })
+    ipcRenderer.send("employee:modifier", {...data});
+  
+    ipcRenderer.once('employee:modifier', function (event,data) {
+     
+      dispatch({
+        type : "STOP_LOADING_EMPLOYEE"
+    });dispatch({
+      type : "STOP_LOADING_EMPLOYEE"
+  });
+    if(Array.isArray(data)){
+      dispatch({
+          type : "MODIFIER_EMPLOYEE",
+          payload : data
+      });
+    }else{
+      dispatch({
+        type : "ERROR_EMPLOYEE",
+        payload : data
+    });
+    }
+  });
+  
+    
+    }
+  }
+
+  
+  export const removeEmployeeEdited = () =>{
+    return (dispatch,getState) =>{
+      dispatch({
+        type : "REMOVE_EMPLOYEE_EDITED"
+    })
+
+  }
+  }

@@ -51,6 +51,28 @@ const employeeReducer = (state = initStat, action) =>{
                 ...state,
                 employees : action.payload
             }
+            case 'READ_ALL_EMPLOYEE' :
+                return{
+                    ...state,
+                    employees : action.payload,
+                    error : null,
+                }
+
+            case 'REMOVE_EMPLOYEE_EDITED' : 
+            return {
+                ...state,
+                employeeEdited : false
+             
+            }
+
+            case 'MODIFIER_EMPLOYEE':
+                return{
+                    ...state,
+                    employeeEdited : true,
+                    employees : action.payload,
+                    error : null,
+
+                }
      
         default :
         return {
