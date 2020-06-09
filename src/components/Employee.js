@@ -108,7 +108,8 @@ class Employee extends Component {
       }
       if (this.state.tab === "employeeCorebeille") {
         this.state.rowsSelected.map((employee) => {
-          this.props.undoDeleteEmployee(employee);
+          setTimeout(this.props.undoDeleteEmployee(employee),100)
+          
         });
         this.setState({ rowsSelected: [] });
       }
@@ -117,7 +118,7 @@ class Employee extends Component {
   addToCorbeille = () => {
     const rowsSelected = [...this.state.rowsSelected];
     rowsSelected.map((employee) => {
-      this.props.addToCorbeille(employee);
+      setTimeout(this.props.addToCorbeille(employee),100);
     });
     this.setState({ rowsSelected: [] });
   };
@@ -130,6 +131,7 @@ class Employee extends Component {
           }
         />
         <div className="sous-nav-container">
+        <h1 style={{color: "white", marginRight : 50}}>Employé</h1>
           <NavLink onClick={this.props.getAllEmployee} to="/employee">
             <button className="btn btn-nav">Actualisé</button>
           </NavLink>

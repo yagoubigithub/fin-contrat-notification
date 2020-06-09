@@ -21,6 +21,7 @@ app.on("ready", () => {
     if (!isEnabled) autoLaunch.enable();
   });
   const mainWindow = require('./mainWindow');
+  const notificationWindow = require('./notificationWindow');
  // mainWindow.maximize();
   // mainWindow.setMenu(null);
  
@@ -35,12 +36,34 @@ app.on("ready", () => {
 
   const Emplyee = require('./emplyee');
   const emplyee = new Emplyee();
+
+
+  const Task = require('./task');
+  const task = new Task();
   
   const iconName = process.platform === 'win32' ? 'windows-icon.png' : 'iconTemplate.png';
   const iconPath = path.join(__dirname, `./assets/${iconName}`);
   tray = new Tray(iconPath);
 
+  
+
+  const {x , y} =   tray.getBounds()
+
+   
+  const {width,height} = notificationWindow.getBounds()
+  const yPosition = process.platform === "darwin" ? y : y-height;
+  notificationWindow.setBounds({
+      x: x - width/2,
+      y : yPosition,
+      width ,
+      height 
+  })
+
+  
   tray.on('click', ()=>{
+    
+     
+     
     if(mainWindow.isVisible()){
 
       mainWindow.hide();

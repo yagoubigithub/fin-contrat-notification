@@ -33,7 +33,7 @@ class Navbar extends Component {
               <AssignmentIndIcon />
             </span>
 
-            <span>Ajouter Employée</span>
+            <span>Ajouter Employé</span>
           </NavLink>
           <NavLink
             activeClassName="nav-active"
@@ -45,6 +45,18 @@ class Navbar extends Component {
             </span>
 
             <span>Liste des Employées</span>
+          </NavLink>
+
+          <NavLink
+            activeClassName="nav-active"
+            to="/alarme"
+            className="nav-link"
+          >
+            <span className="nav-link-icon">
+              <FormatListNumberedIcon />
+            </span>
+
+            <span>Alarme</span>
           </NavLink>
          
         </div>

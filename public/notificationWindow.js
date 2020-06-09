@@ -11,6 +11,11 @@ let notificationWindow = new BrowserWindow({
       nodeIntegration: true,
       nativeWindowOpen: true
     },
+    alwaysOnTop : true,
+    skipTaskbar: true,
+    height : 500,
+    width : 300,
+    frame : false,
     icon: `${path.join(__dirname, "./logo512.png")}`
   });
   notificationWindow.loadURL(

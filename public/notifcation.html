@@ -3,9 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Alerte Contrat</title>
 </head>
 <body>
-    
+    <h1>Fin contart de  : </h1>
+    <script>
+          const electron = window.require("electron");
+    const { ipcRenderer } = electron;
+
+
+    ipcRenderer.once("employee:alarte", function (event, res) {
+
+       
+
+    })
+    </script>
 </body>
 </html>

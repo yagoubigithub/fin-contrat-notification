@@ -82,7 +82,7 @@ function Employee(){
   if (value.id !== undefined) {
     // get one maitre_douvrage
 
-    if(value.status === "corbeille")
+    
   
 
     db.run(
@@ -103,7 +103,37 @@ function Employee(){
 
  });
 
+//modifier
+ 
+ipcMain.on("employee:modifier", (event, value) => {
+
+  if (value.id !== undefined) {
+  
+
+   
+  
+
+    db.run(
+      `UPDATE employee  SET nom='${value.nom}', prenom='${value.prenom}',adresse='${value.adresse}',telephone='${value.telephone}',email='${value.email}', date_debut='${value.date_debut}',date_fin='${value.date_fin}',  status='${value.status}' WHERE id = ${value.id};`,
+      function(err) {
+        if (err) mainWindow.webContents.send("employee:modifier", err);
+
+      
+        ReturnAllEmployee().then(employees=>{
+          mainWindow.webContents.send("employee:modifier", employees);
+      })
+      .catch(err=>{
+          mainWindow.webContents.send("employee:modifier", err);
+      })
+      }
+    );
+  }
+
+ });
+
 }
+
+
 
 function ReturnAllEmployee(){
     const employees = [];

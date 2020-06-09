@@ -21,7 +21,8 @@ import "./App.css";
 
 import AjouterEmployee from "./components/ajouter/AjouterEmployee";
 import Employee from "./components/Employee";
-import ModifierEmployee from "./components/modfier/ModifierEmployee";
+
+import Alarme from "./components/Alarme";
 
 
 
@@ -42,6 +43,9 @@ class App extends Component {
              
               <Route  path="/ajouter_employee" component={AjouterEmployee} />
               <Route  path="/employees" component={Employee} />
+
+              <Route  path="/alarme" component={Alarme
+              } />
               
              
             </Switch>

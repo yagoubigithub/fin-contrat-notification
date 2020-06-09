@@ -30,7 +30,7 @@ import { connect } from "react-redux";
 
 import {modifierEmployee , removeEmployeeEdited} from '../../store/actions/employeeAction'
 
-class AjouterEmployee extends Component {
+class ModifierEmployee extends Component {
     state = {
     
 
@@ -40,20 +40,10 @@ class AjouterEmployee extends Component {
         this.setState({...this.props.employee})
     }
     componentWillReceiveProps(nextProps){
-        if(nextProps.employeeCreated){
-            this.setState({
-              nom : "",
-              prenom : "",
-              adresse :"",
-              telephone :"",
-              email : "",
-              date_fin : "",
-              date_debut : "",
-
-                success : "L'employé a été ajouté",
-                error : ""
-            })
-            this.props.removeEmployeeCreated();
+        if(nextProps.employeeEdited){
+            //send data
+            this.props.removeEmployeeEdited();
+            this.props.sendData({employeeEdited : true})
         }
 
        
@@ -76,7 +66,7 @@ class AjouterEmployee extends Component {
 
         console.log(d)
 
-      //this.props.ajouterEmployee(d);
+      this.props.modifierEmployee(d);
 
 
     }
@@ -100,7 +90,7 @@ class AjouterEmployee extends Component {
               <div className="alert error">{this.state.error} </div>
         <div className="alert success">{this.state.success} </div>
                
-            <Grid container spacing={2} style={{padding : 10}}>
+            <Grid container spacing={1}>
            
                <Grid item xs={6}>
             <h3 style={{ margin: 0 }}>Nom * </h3>
@@ -126,7 +116,7 @@ class AjouterEmployee extends Component {
             />
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <h3 style={{ margin: 0 }}>Adresse </h3>
             <TextField
               placeholder="Adresse"
@@ -139,7 +129,7 @@ class AjouterEmployee extends Component {
           </Grid>
 
 
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <h3 style={{ margin: 0 }}>Email </h3>
             <TextField
               placeholder="Email"
@@ -236,4 +226,4 @@ const mapActionToProps = dispatch => {
     };
   };
 
-export default connect(mapStateToProps,mapActionToProps) ( AjouterEmployee );
+export default connect(mapStateToProps,mapActionToProps) ( ModifierEmployee );

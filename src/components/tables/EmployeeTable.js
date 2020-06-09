@@ -14,6 +14,9 @@ import {
   Grid,
   DialogContent,
   Checkbox,
+  Paper,
+  DialogActions,
+  Button,
 } from "@material-ui/core";
 
 //redux
@@ -133,6 +136,11 @@ class EmployeeTable extends Component {
       maitreDouvrageSelected,
     });
   };
+  getData = (data)=>{
+    if(data.employeeEdited){
+      this.handleOpenCloseModifierDialog()
+    }
+  }
   render() {
     const columns = [
       {
@@ -344,7 +352,7 @@ class EmployeeTable extends Component {
                 <IconButton
                   size="small"
                   onClick={() =>
-                    this.props.undoDeleteMaitreDouvrage(props.value)
+                    this.props.undoDeleteEmployee(props.value)
                   }
                 >
                   <UndoIcon className="black" fontSize="small"></UndoIcon>
@@ -462,16 +470,26 @@ class EmployeeTable extends Component {
           open={this.state.modifierDialog}
           onClose={this.handleOpenCloseModifierDialog}
         maxWidth="xl"
+       
         >
         
           
 
 
-
-          <ModifierEmployee employee={this.state.employee} />
-          <button onClick={this.handleOpenCloseModifierDialog}>
+<div  style={{padding :  20}}>
+<Paper style={{padding :  5}}>
+   <ModifierEmployee employee={this.state.employee} sendData={this.getData} />
+</Paper>
+<DialogActions>
+   <Button onClick={this.handleOpenCloseModifierDialog} color="primary" variant="contained">
             Cancel
-          </button>
+          </Button>
+</DialogActions>
+    
+         
+</div>
+
+       
         </Dialog>
 
      
