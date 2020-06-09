@@ -25,8 +25,32 @@ const employeeReducer = (state = initStat, action) =>{
                 return {
                     ...state,
                     error : null,
+                    employees : action.payload,
+                    employeeCreated : true,
+                }
+             case 'REMOVE_EMPLOYEE_CREATED':
+                    return {
+                        ...state,
+                        employeeCreated : false
+            }
+            case 'READ_ONE_EMPLOYEE' :
+                return {
+                    ...state,
+                    error : null,
+                    employee : action.payload
+                }
+            case 'ADD_TO_CORBEILLE_EMPLOYEE' :
+                return {
+                    ...state,
                     employees : action.payload
                 }
+
+            case 'UNDO_DELETE_EMPLOYEE' :
+
+            return {
+                ...state,
+                employees : action.payload
+            }
      
         default :
         return {

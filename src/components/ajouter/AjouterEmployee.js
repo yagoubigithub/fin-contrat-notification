@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 
 
 
+//utils
+import { getCurrentDateTime } from "../../utils/methods";
+
+
+
 //Mui
 import Dialog from "@material-ui/core/Dialog";
 import IconButton from "@material-ui/core/IconButton";
@@ -25,7 +30,7 @@ import LoadingComponent from "../../utils/loadingComponent";
 //redux
 import { connect } from "react-redux";
 
-import {ajouterEmployee} from '../../store/actions/employeeAction'
+import {ajouterEmployee , removeEmployeeCreated} from '../../store/actions/employeeAction'
 
 class AjouterEmployee extends Component {
     state = {
@@ -34,8 +39,27 @@ class AjouterEmployee extends Component {
         adresse :"",
         telephone :"",
         email : "",
+        date_fin : "",
+        date_debut : ""
 
 
+    }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.employeeCreated){
+            this.setState({
+              nom : "",
+              prenom : "",
+              adresse :"",
+              telephone :"",
+              email : "",
+              date_fin : "",
+              date_debut : "",
+
+                success : "L'employé a été ajouté",
+                error : ""
+            })
+            this.props.removeEmployeeCreated();
+        }
     }
     ajouter = () => {
         const d = { ...this.state };
@@ -43,8 +67,19 @@ class AjouterEmployee extends Component {
           this.setState({ error: "le champ nom et obligatoire *" });
           return;
         }
+        if (d.date_fin.trim().length === 0) {
+          this.setState({ error: "le champ Date du fin du contrat et obligatoire *" });
+          return;
+        }
+
+        if (d.date_debut.trim().length === 0) {
+          this.setState({ error: "le champ Date du debut du contrat et obligatoire *" });
+          return;
+        }
 
         console.log(d)
+
+      this.props.ajouterEmployee(d);
 
 
     }
@@ -59,6 +94,12 @@ class AjouterEmployee extends Component {
     render() {
         return (
             <div>
+ <LoadingComponent
+          loading={
+            this.props.loading !== undefined ? this.props.loading : false
+          }
+        />
+
               <div className="alert error">{this.state.error} </div>
         <div className="alert success">{this.state.success} </div>
                
@@ -124,6 +165,48 @@ class AjouterEmployee extends Component {
             />
           </Grid>
        
+
+          <Grid item xs={6}>
+            <h3 style={{ margin: 0 }}>date du debut du contrat *</h3>
+            <TextField
+              placeholder="date du debut du contrat *"
+              value={
+                this.state.date_debut === ""
+                  ? getCurrentDateTime(new Date().getTime()).split("T")[0]
+                  : getCurrentDateTime(
+                      new Date(this.state.date_debut).getTime()
+                    ).split("T")[0]
+              }
+              name="date_debut"
+              variant="outlined"
+              type="date"
+              onChange={this.handleChange}
+              fullWidth
+            />
+          </Grid>
+
+          
+          <Grid item xs={6}>
+            <h3 style={{ margin: 0 }}>date du fin du contrat * </h3>
+            <TextField
+              placeholder="date du fin du contrat *"
+              value={
+                this.state.date_fin === ""
+                  ? getCurrentDateTime(new Date().getTime()).split("T")[0]
+                  : getCurrentDateTime(
+                      new Date(this.state.date_fin).getTime()
+                    ).split("T")[0]
+              }
+              name="date_fin"
+              variant="outlined"
+              type="date"
+              onChange={this.handleChange}
+              fullWidth
+            />
+          </Grid>
+
+
+         
           <Grid item xs={12}>
             <br />
             <Button
@@ -144,13 +227,15 @@ class AjouterEmployee extends Component {
 
 const mapActionToProps = dispatch => {
     return {
-      ajouterEmployee: data => dispatch(ajouterEmployee(data))
+      ajouterEmployee: data => dispatch(ajouterEmployee(data)),
+      removeEmployeeCreated :  ()=> dispatch(removeEmployeeCreated())
     };
   };
   const mapStateToProps = state => {
     
     return {
       loading: state.employee.loading,
+      employeeCreated : state.employee.employeeCreated
     };
   };
 

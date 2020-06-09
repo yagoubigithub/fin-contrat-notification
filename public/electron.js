@@ -32,6 +32,9 @@ app.on("ready", () => {
 
   const User = require('./user');
   const user = new User();
+
+  const Emplyee = require('./emplyee');
+  const emplyee = new Emplyee();
   
   const iconName = process.platform === 'win32' ? 'windows-icon.png' : 'iconTemplate.png';
   const iconPath = path.join(__dirname, `./assets/${iconName}`);

@@ -46,32 +46,7 @@ class Navbar extends Component {
 
             <span>Liste des Employées</span>
           </NavLink>
-          <NavLink
-            activeClassName="nav-active"
-            to="/ajouter_contrat"
-            className="nav-link"
-          >
-            <span className="nav-link-icon">
-              <DomainIcon />
-            </span>
-
-            <span>Ajouter Contrat</span>
-          </NavLink>
-
-          <NavLink
-            activeClassName="nav-active"
-            to="/contrats"
-            className="nav-link"
-          >
-            <span className="nav-link-icon">
-              
-              <AccessTimeIcon />
-            </span>
-
-            <span>Liste des Contrats</span>
-          </NavLink>
-
-        
+         
         </div>
       </nav>
     );

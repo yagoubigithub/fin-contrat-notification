@@ -20,7 +20,7 @@ export const ajouterEmployee  = (data) =>{
     if(Array.isArray(data)){
       dispatch({
           type : "AJOUTER_EMPLOYEE",
-          payload : data[0]
+          payload : data
       });
     }else{
       dispatch({
@@ -31,5 +31,146 @@ export const ajouterEmployee  = (data) =>{
   });
   
     
+    }
+  }
+
+
+
+  
+//delete (mettre dans le corbeille)
+export const addToCorbeille = (id) =>{
+  return (dispatch , getState)=>{
+
+    dispatch({
+      type : "LOADING_EMPLOYEE"
+  })
+  ipcRenderer.send("employee:delete", {id, status :  "corbeille"});
+
+  ipcRenderer.once('employee:delete', function (event,data) {
+   
+    dispatch({
+      type : "STOP_LOADING_EMPLOYEE"
+  });
+  if(Array.isArray(data)){
+    dispatch({
+        type : "ADD_TO_CORBEILLE_EMPLOYEE",
+        payload : data
+    });
+  }else{
+    dispatch({
+      type : "ERROR_EMPLOYEE",
+      payload :data
+  });
+  }
+});
+    
+
+  }
+}
+
+
+
+ 
+export const getAllEmployee = () =>{
+  return (dispatch ,getState)=>{
+
+    
+    dispatch({
+      type : "LOADING_EMPLOYEE"
+  })
+  ipcRenderer.send("employee", {});
+
+  
+  ipcRenderer.once('employee', function (event,data) {
+    dispatch({
+      type : "STOP_LOADING_EMPLOYEE"
+  });
+ 
+  if(Array.isArray(data)){
+    dispatch({
+        type : "READ_ALL_EMPLOYEE",
+        payload : data
+    });
+  }else{
+    dispatch({
+      type : "ERROR_EMPLOYEE",
+      payload : data
+  });
+  }
+});
+
+  }
+}
+
+
+//undo delete
+export const undoDeleteEmployee = (id) =>{
+  return (dispatch ,getState)=>{
+
+    dispatch({
+      type : "LOADING_EMPLOYEE"
+  })
+  ipcRenderer.send("employee:delete", {id, status :  "undo"});
+
+  ipcRenderer.once('employee:delete', function (event,data) {
+   
+    dispatch({
+      type : "STOP_LOADING_EMPLOYEE"
+  });
+  if(Array.isArray(data)){
+    dispatch({
+        type : "UNDO_DELETE_EMPLOYEE",
+        payload : data
+    });
+  }else{
+    dispatch({
+      type : "ERROR_EMPLOYEE",
+      payload :data
+  });
+  }
+});
+
+  }
+}
+
+
+  export const removeEmployeeCreated = () =>{
+    return (dispatch,getState) =>{
+      dispatch({
+        type : "REMOVE_EMPLOYEE_CREATED"
+    })
+
+  }
+  }
+
+
+  export const getEmployee = (id) =>{
+
+    return ( dispatch , getState) => {
+      dispatch({
+        type : "LOADING_EMPLOYEE"
+    })
+    ipcRenderer.send("employee", {id});
+  
+    
+    ipcRenderer.once('employee', function (event,data) {
+      dispatch({
+        type : "STOP_LOADING_EMPLOYEE"
+    });
+   
+    if(Array.isArray(data)){
+      dispatch({
+          type : "READ_ONE_EMPLOYEE",
+          payload : data[0]
+      });
+    }
+    else{
+      dispatch({
+        type : "ERROR_EMPLOYEE",
+        payload : data
+    });
+    }
+  });
+  
     }
   }
