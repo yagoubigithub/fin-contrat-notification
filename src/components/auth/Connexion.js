@@ -10,6 +10,7 @@ import {connexion} from '../../store/actions/authAction'
 import LoadingComponent from "../../utils/loadingComponent";
 //Mui
 import Dialog from '@material-ui/core/Dialog'
+import TaskBar from '../TaskBar';
 
  class Connexion extends Component {
    
@@ -37,6 +38,7 @@ import Dialog from '@material-ui/core/Dialog'
     render() {
         return (
             <Dialog fullScreen open={true}>
+            <TaskBar/>
      <div> 
           
           <div className="container-auth">

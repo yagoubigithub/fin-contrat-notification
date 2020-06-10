@@ -101,6 +101,9 @@ function Task(){
 
         notificationWindow.hide()
      })
+     ipcMain.on("closeWindow",  (event,value)=>{
+        mainWindow.hide()
+     })
 
     
 
