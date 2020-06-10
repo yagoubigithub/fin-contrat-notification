@@ -18,7 +18,7 @@ let notificationWindow = new BrowserWindow({
     height : 500,
    width : 400,
    frame : false,
-    icon: `${path.join(__dirname, "./logo512.png")}`
+   icon: `${path.join(__dirname, "./assets/logo.png")}`
   });
   notificationWindow.loadURL(
     isDev

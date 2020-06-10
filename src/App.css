@@ -17,8 +17,8 @@
 
   /*size*/
 
-  --navbarWidth : 270px;
-  --MincenavbarWidth : -261px;
+  --navbarWidth : 210px;
+  --MincenavbarWidth : -201px;
 }
 
 .alert{
@@ -47,7 +47,7 @@ background-repeat: no-repeat;
   position: fixed;
   height: 100%;
 
-  top: 0;
+  top: 30px;
   left: 0;
 }
 
@@ -55,7 +55,7 @@ background-repeat: no-repeat;
   position: fixed;
   height: 100%;
   left: var(--navbarWidth);
-  top: 0;
+  top: 30px;
   right: 0;
   bottom: 0;
   overflow: auto;

@@ -11,7 +11,10 @@ let mainWindow = new BrowserWindow({
       nodeIntegration: true,
       nativeWindowOpen: true
     },
-    icon: `${path.join(__dirname, "./logo512.png")}`
+   
+    resizable :false,
+    frame : false,
+    icon: `${path.join(__dirname, "./assets/logo.png")}`
   });
   mainWindow.loadURL(
     isDev

@@ -23,6 +23,7 @@ import AjouterEmployee from "./components/ajouter/AjouterEmployee";
 import Employee from "./components/Employee";
 
 import Alarme from "./components/Alarme";
+import TaskBar from "./components/TaskBar";
 
 
 
@@ -30,7 +31,9 @@ class App extends Component {
   render() {
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      
       <Router>
+      <TaskBar></TaskBar>
         <div className="container">
           {this.props.auth.user !== undefined ? (
             <Navbar />

@@ -8,7 +8,7 @@
       "buildResources": "public"
     },
     "win": {
-      "icon": "public/logo512.png"
+      "icon": "public/assets/logo.png"
     },
     "productName": "Expiration du contrat",
     "copyright": "yagoubi abdelkader"

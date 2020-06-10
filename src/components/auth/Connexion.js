@@ -9,7 +9,7 @@ import {connexion} from '../../store/actions/authAction'
 
 import LoadingComponent from "../../utils/loadingComponent";
 //Mui
-
+import Dialog from '@material-ui/core/Dialog'
 
  class Connexion extends Component {
    
@@ -36,22 +36,27 @@ import LoadingComponent from "../../utils/loadingComponent";
     }
     render() {
         return (
-            <div> 
+            <Dialog fullScreen open={true}>
+     <div> 
           
-               <div className="container-auth">
-                <form onSubmit={this.handleSubmit} className="form-auth">
-                    <span className="error-auth">{this.props.auth.error}</span>
-                    <input className="input-auth" onChange={this.handleChange} name="username" type="text" placeholder="Username" />
-                    <input className="input-auth"   onChange={this.handleChange} name="password" type="password" placeholder="Mot de passe" />
-                    <input type="submit" className="button-auth" value="Connexion"/>
-                    
-                </form>  
-                 
-            </div>
-         
-            <LoadingComponent loading={this.props.loading !== undefined ? this.props.loading : false} />
-            </div>
-        )
+          <div className="container-auth">
+           <form onSubmit={this.handleSubmit} className="form-auth">
+               <span className="error-auth">{this.props.auth.error}</span>
+               <input className="input-auth" onChange={this.handleChange} name="username" type="text" placeholder="Username" />
+               <input className="input-auth"   onChange={this.handleChange} name="password" type="password" placeholder="Mot de passe" />
+               <input type="submit" className="button-auth" value="Connexion"/>
+               
+           </form>  
+            
+       </div>
+    
+       <LoadingComponent loading={this.props.loading !== undefined ? this.props.loading : false} />
+       </div>
+  
+  
+            </Dialog>
+       
+       )
     }
 
 }
