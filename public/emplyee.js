@@ -6,7 +6,7 @@ const mainWindow = require('./mainWindow');
 const methode = Employee.prototype;
 
 function Employee(){
-// db.run(`DROP TABLE employee` )
+ //db.run(`DROP TABLE employee` )
     db.run(`CREATE TABLE IF NOT EXISTS employee (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nom BLOB ,

@@ -77,9 +77,13 @@
     <script>
         const electron = window.require("electron");
         const { ipcRenderer } = electron;
-
+        const foo = new Sound( 100, true);
 
         ipcRenderer.once("employee:alarte", function (event, res) {
+            console.log(res)
+            foo.setUrl(res.alarme.son)
+           
+            foo.start();
             const { nom, prenom, adresse, telephone, email, date_debut, date_fin } = { ...res.employee }
             let list = document.getElementById("list")
 
@@ -110,9 +114,50 @@
 
         const closeBtn = document.getElementById('close-btn');
         closeBtn.addEventListener('click', () => {
+            foo.stop()
             ipcRenderer.send('close-notification')
-        })
+        });
 
+
+        function Sound( volume, loop)
+{
+   
+    this.volume = volume;
+    this.loop = loop;
+    var son;
+    this.son = son;
+    this.finish = false;
+    this.stop = function()
+    {
+        document.body.removeChild(this.son);
+    }
+    this.start = function()
+    {
+        if (this.finish) return false;
+        this.son = document.createElement("embed");
+        this.son.setAttribute("src", this.source);
+        this.son.setAttribute("hidden", "true");
+        this.son.setAttribute("volume", this.volume);
+        this.son.setAttribute("autostart", "true");
+        this.son.setAttribute("loop", this.loop);
+        document.body.appendChild(this.son);
+    }
+    this.remove = function()
+    {
+        document.body.removeChild(this.son);
+        this.finish = true;
+    }
+    this.init = function(volume, loop)
+    {
+        this.finish = false;
+        this.volume = volume;
+        this.loop = loop;
+    }
+    this.setUrl = function(url)
+    {
+        this.source = url;
+    }
+}
     </script>
 </body>
 

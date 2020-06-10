@@ -11,8 +11,11 @@ function Task(){
      // Task
      let time = 30000;
      let heurInterval;
-     db.get('SELECT * FROM alarte WHERE  id=1', (err, result)=>{
-         const repeter = result.repeter;
+     setTimeout(()=>{
+ db.get('SELECT * FROM alarte WHERE  id=1', (err, result)=>{
+     
+     if(result !== undefined){
+       const repeter = result.repeter;
 
 
          switch (repeter) {
@@ -64,7 +67,7 @@ function Task(){
                                 console.log("employee", employee.nom)
                                 notificationWindow.show()
                               
-                                    notificationWindow.webContents.send("employee:alarte", {employee})
+                                    notificationWindow.webContents.send("employee:alarte", {alarme : result , employee})
                             
 
 
@@ -82,10 +85,14 @@ function Task(){
          
              default:
                  break;
-         }
+         }   
+     }
+        
 
      })
 
+     },2000)
+    
      ipcMain.on('close-notification', (event,value)=>{
 
         notificationWindow.hide()

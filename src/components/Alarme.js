@@ -29,7 +29,8 @@ import LoadingComponent from "./../utils/loadingComponent";
 import { connect } from "react-redux";
 export default class alarme extends Component {
     state = {
-        repeter : "jours"
+        repeter : "jours",
+        son : "railroad_crossing_bell-Brylon_Terry-1551570865.mp3"
     }
 
     handleChange = (e)=>{
@@ -56,7 +57,11 @@ export default class alarme extends Component {
       <Grid item xs={6}>
         <h3 style={{ margin: 0 }}>Son </h3>
     
-      
+        <Select value={this.state.son} name="son" fullWidth variant="outlined" onChange={this.handleChange}>
+        <MenuItem value={"railroad_crossing_bell-Brylon_Terry-1551570865.mp3"}>Railroad Crossing Bell Sound</MenuItem>
+        <MenuItem value={"Red Alert-SoundBible.com-108009997.mp3"}>Red Alert Sound</MenuItem>
+       
+        </Select>
         
       </Grid>
 

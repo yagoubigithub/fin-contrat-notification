@@ -12,41 +12,59 @@ function User() {
   db.run(`CREATE TABLE IF NOT EXISTS user (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username BLOB ,
-        password BLOB ,
-        UNIQUE(username, password)
+        password BLOB 
+        
        
     )`);
 
   db.run(`CREATE TABLE IF NOT EXISTS alarte (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       repeter BLOB ,
-      son BLOB ,
-      UNIQUE(repeter, son)
+      son BLOB 
      
   )`);
+ 
+  
+  db.get(`SELECT * FROM alarte WHERE  id=1`, function (err, result) {
+    if(result === undefined ){
 
-  db.run(
-    `INSERT OR IGNORE INTO alarte( repeter  , son  ) VALUES ('jours','file.mp4')  
-        `,
-    function (err) {
-      db.all(`SELECT * FROM alarte`, function (err, rows) {
-        console.log(rows);
-      });
+     
+        db.run(
+          `INSERT  INTO alarte( repeter  , son  ) VALUES ('jours','railroad_crossing_bell-Brylon_Terry-1551570865.mp3')  
+              `,
+          function (err) {
+            db.all(`SELECT * FROM alarte`, function (err, rows) {
+              console.log(rows);
+            });
+          }
+        );
+      
     }
-  );
+  });
+  
 
-  db.run(
-    `INSERT OR IGNORE INTO user( username  , password  ) VALUES ('admin','admin')  
-                  `,
-    function (err) {
-      console.log("insert");
+  db.all(`SELECT * FROM user`, function (err, rows) {
+    if(rows == undefined ){
 
-      db.all(`SELECT * FROM user`, function (err, rows) {
-        console.log(rows);
-      });
+    
+        db.run(
+          `INSERT  INTO user( username  , password  ) VALUES ('admin','admin')  
+                        `,
+          function (err) {
+            console.log("insert");
+      
+            db.all(`SELECT * FROM user`, function (err, rows) {
+              console.log(rows);
+            });
+          }
+        );
+      
+      
     }
-  );
+  });
 
+
+ 
   //get user
   ipcMain.on("user", (event, value) => {
     db.all(
@@ -57,5 +75,6 @@ function User() {
       }
     );
   });
+  
 }
 module.exports = User;
