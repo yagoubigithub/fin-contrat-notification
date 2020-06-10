@@ -13,7 +13,7 @@ export const connexion = (data) =>{
       dispatch({
         type : "STOP_LOADING_AUTH"
     });
-    console.log(data);
+   
     if(data[0] !== undefined){
       dispatch({
         type : "AUTH_SUCCESS",

@@ -40,6 +40,9 @@ app.on("ready", () => {
 
   const Task = require('./task');
   const task = new Task();
+
+  const Alarme = require('./alarme');
+  const alarme = new Alarme();
   
   const iconName = process.platform === 'win32' ? 'windows-icon.png' : 'iconTemplate.png';
   const iconPath = path.join(__dirname, `./assets/${iconName}`);

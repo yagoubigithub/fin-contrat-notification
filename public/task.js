@@ -9,7 +9,7 @@ const notificationWindow = require('./notificationWindow')
 
 function Task(){
      // Task
-     let time = 30000;
+     let time = 1 * 60 * 60 * 1000;
      let heurInterval;
      setTimeout(()=>{
  db.get('SELECT * FROM alarte WHERE  id=1', (err, result)=>{
@@ -34,6 +34,10 @@ function Task(){
             
                                  if(compare(date_fin,today)){
                                      console.log("employee ", employee.nom)
+                                     notificationWindow.show()
+                              
+                                     notificationWindow.webContents.send("employee:alarte", {alarme : result , employee})
+                             
                                  }
                                  
                              });
