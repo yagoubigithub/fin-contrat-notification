@@ -1,6 +1,6 @@
 const methode = Task.prototype;
 
-
+const {ipcMain} = require("electron")
 const db = require('./db')
 const mainWindow = require('./mainWindow');
 
@@ -84,6 +84,11 @@ function Task(){
                  break;
          }
 
+     })
+
+     ipcMain.on('close-notification', (event,value)=>{
+
+        notificationWindow.hide()
      })
 
     

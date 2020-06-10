@@ -6,17 +6,64 @@
     <title>Alerte Contrat</title>
 </head>
 <body>
-    <h1>Fin contart de  : </h1>
+   
+    <nav>
+
+        <button id="close-btn">close</button>
+    </nav>
+
+    <main>
+        <h1>Fin de contrat :  </h1>
+        <ul id="list">
+            <li id="liNom"></li>
+            <li id="liPrenom"></li>
+            <li id="liAdresse"></li>
+            <li id="liTelephone"></li>
+            <li id="liEmail"></li>
+            <li id="liDateDebut"></li>
+            <li id="liDateFin"></li>
+</ul>
+
+    </main>
     <script>
           const electron = window.require("electron");
     const { ipcRenderer } = electron;
 
 
     ipcRenderer.once("employee:alarte", function (event, res) {
+        const {nom , prenom, adresse, telephone, email, date_debut, date_fin} = {...res.employee}
+        let list  = document.getElementById("list")
+      
+        let liNom = document.getElementById("liNom");
+        liNom.innerHTML = `<p>Nom : <span>${nom}</span></p>`;
 
-       
+        let liPrenom = document.getElementById("liPrenom");
+        liPrenom.innerHTML = `<p>Prénom : <span>${prenom}</span></p>`;
 
-    })
+        let liAdresse = document.getElementById("liAdresse");
+        liAdresse.innerHTML = `<p>Adresse : <span>${adresse}</span></p>`;
+
+        let liTelephone = document.getElementById("liTelephone");
+        liTelephone.innerHTML = `<p>    Télephone : <span>${telephone}</span></p>` ;
+
+        let liEmail = document.getElementById("liEmail");
+        liEmail.innerHTML = `<p>Email : <span>${email}</span></p>`;
+
+        let liDateDebut = document.getElementById("liDateDebut");
+        liDateDebut.innerHTML = `<p>Date début : <span>${date_debut}</span></p>`;
+
+        let liDateFin = document.getElementById("liDateFin");
+        liDateFin.innerHTML = `<p>Date fin : <span>${date_fin}</span></p>`;
+
+
+
+    });
+
+  const closeBtn =   document.getElementById('close-btn');
+  closeBtn.addEventListener('click', ()=>{
+      ipcRenderer.send('close-notification')
+  })
+   
     </script>
 </body>
 </html>

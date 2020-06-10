@@ -287,7 +287,7 @@ class EmployeeTable extends Component {
         ),
       },
       {
-        Header: "Date du fin du contrat",
+        Header: "Date de fin de contrat",
         accessor: "date_fin",
         width: 250,
         Cell: (props) => (
@@ -312,7 +312,7 @@ class EmployeeTable extends Component {
         ),
       },
       {
-        Header: "Date du devut du contrat",
+        Header: "Date de début de contrat",
         accessor: "date_debut",
         width: 250,
         Cell: (props) => (

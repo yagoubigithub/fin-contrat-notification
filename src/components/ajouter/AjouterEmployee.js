@@ -68,12 +68,12 @@ class AjouterEmployee extends Component {
           return;
         }
         if (d.date_fin.trim().length === 0) {
-          this.setState({ error: "le champ Date du fin du contrat et obligatoire *" });
+          this.setState({ error: "le champ Date de fin de contrat et obligatoire *" });
           return;
         }
 
         if (d.date_debut.trim().length === 0) {
-          this.setState({ error: "le champ Date du debut du contrat et obligatoire *" });
+          this.setState({ error: "le champ Date de début de contrat et obligatoire *" });
           return;
         }
 
@@ -167,9 +167,9 @@ class AjouterEmployee extends Component {
        
 
           <Grid item xs={6}>
-            <h3 style={{ margin: 0 }}>date du debut du contrat *</h3>
+            <h3 style={{ margin: 0 }}>date de début de contrat *</h3>
             <TextField
-              placeholder="date du debut du contrat *"
+              placeholder="date de début de contrat *"
               value={
                 this.state.date_debut === ""
                   ? getCurrentDateTime(new Date().getTime()).split("T")[0]
@@ -187,9 +187,9 @@ class AjouterEmployee extends Component {
 
           
           <Grid item xs={6}>
-            <h3 style={{ margin: 0 }}>date du fin du contrat * </h3>
+            <h3 style={{ margin: 0 }}>date de fin de contrat * </h3>
             <TextField
-              placeholder="date du fin du contrat *"
+              placeholder="date de fin de contrat *"
               value={
                 this.state.date_fin === ""
                   ? getCurrentDateTime(new Date().getTime()).split("T")[0]

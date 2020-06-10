@@ -59,6 +59,8 @@ app.on("ready", () => {
       height 
   })
 
+
+  
   
   tray.on('click', ()=>{
     
