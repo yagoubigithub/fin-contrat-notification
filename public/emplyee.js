@@ -6,17 +6,17 @@ const mainWindow = require('./mainWindow');
 const methode = Employee.prototype;
 
 function Employee(){
- //db.run(`DROP TABLE employee` )
+// db.run(`DROP TABLE employee` )
     db.run(`CREATE TABLE IF NOT EXISTS employee (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nom TEXT ,
-        prenom TEXT ,
-        adresse TEXT ,
-        telephone TEXT ,
-        email TEXT ,
-        date_debut TEXT,
-        date_fin TEXT,
-        status TEXT
+        nom BLOB ,
+        prenom BLOB ,
+        adresse BLOB ,
+        telephone BLOB ,
+        email BLOB ,
+        date_debut BLOB,
+        date_fin BLOB,
+        status BLOB
     )`);
    
     
@@ -107,12 +107,7 @@ function Employee(){
  
 ipcMain.on("employee:modifier", (event, value) => {
 
-  if (value.id !== undefined) {
-  
-
-   
-  
-
+  if (value.id !== undefined) {  
     db.run(
       `UPDATE employee  SET nom='${value.nom}', prenom='${value.prenom}',adresse='${value.adresse}',telephone='${value.telephone}',email='${value.email}', date_debut='${value.date_debut}',date_fin='${value.date_fin}',  status='${value.status}' WHERE id = ${value.id};`,
       function(err) {

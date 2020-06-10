@@ -5,19 +5,22 @@ const mainWindow = require("./mainWindow");
 const methode = User.prototype;
 
 function User() {
-  //db.run(`DROP TABLE user` )
+ // db.run(`DROP TABLE user` )
+ // db.run(`DROP TABLE alarte` )
+
+
   db.run(`CREATE TABLE IF NOT EXISTS user (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT ,
-        password TEXT ,
+        username BLOB ,
+        password BLOB ,
         UNIQUE(username, password)
        
     )`);
 
   db.run(`CREATE TABLE IF NOT EXISTS alarte (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      repeter TEXT ,
-      son TEXT ,
+      repeter BLOB ,
+      son BLOB ,
       UNIQUE(repeter, son)
      
   )`);

@@ -11,10 +11,12 @@ let notificationWindow = new BrowserWindow({
       nodeIntegration: true,
       nativeWindowOpen: true
     },
+    transparent : true,
     alwaysOnTop : true,
     skipTaskbar: true,
+    resizable :false,
     height : 500,
-    width : 300,
+    width : 400,
     frame : false,
     icon: `${path.join(__dirname, "./logo512.png")}`
   });
