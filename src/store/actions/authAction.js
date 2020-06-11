@@ -36,7 +36,37 @@ export const connexion = (data) =>{
     }
 }
 
-export const modifier_user  = (data) =>{
+
+export const getUser = () =>{
+  return (dispatch ,getState)=>{
+
+    dispatch({
+      type : "LOADING_AUTH"
+  })
+  ipcRenderer.send("user", {});
+
+  ipcRenderer.once('user', function (event,data) {
+   
+    dispatch({
+      type : "STOP_LOADING_AUTH"
+  });dispatch({
+    type : "STOP_LOADING_AUTH"
+});
+  if(Array.isArray(data)){
+    dispatch({
+        type : "GET_USER",
+        payload : data[0]
+    });
+  }else{
+    dispatch({
+      type : "ERROR_AUTH",
+      payload : data
+  });
+  }
+});
+  }
+}
+export const modifierUser  = (data) =>{
   return (dispatch,getState) =>{
     dispatch({
       type : "LOADING_AUTH"

@@ -12,7 +12,6 @@ import { getCurrentDateTime } from "./../utils/methods";
 import Grid from "@material-ui/core/Grid";
 
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select'
 
@@ -78,7 +77,7 @@ import {getAlarme,modifierAlarme} from '../store/actions/alarmAction'
         </Select>
 
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12}>
         <h3 style={{ margin: 0 }}>Son </h3>
     
         <Select value={this.state.son} name="son" fullWidth variant="outlined" onChange={this.handleChange}>

@@ -58,6 +58,18 @@ class Navbar extends Component {
 
             <span>Alarme</span>
           </NavLink>
+
+          <NavLink
+            activeClassName="nav-active"
+            to="/user"
+            className="nav-link"
+          >
+            <span className="nav-link-icon">
+              <FormatListNumberedIcon />
+            </span>
+
+            <span>User</span>
+          </NavLink>
          
         </div>
       </nav>

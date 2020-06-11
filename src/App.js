@@ -24,6 +24,7 @@ import Employee from "./components/Employee";
 
 import Alarme from "./components/Alarme";
 import TaskBar from "./components/TaskBar";
+import User from "./components/User";
 
 
 
@@ -48,6 +49,9 @@ class App extends Component {
               <Route  path="/employees" component={Employee} />
 
               <Route  path="/alarme" component={Alarme
+              } />
+              
+              <Route  path="/user" component={User
               } />
               
              

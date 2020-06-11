@@ -32,6 +32,13 @@ const authReducer = (state = initStat, action) =>{
                 error :null,
                 user : action.payload
             }
+        case 'GET_USER' : 
+
+        return {
+            ...state,
+            error : null,
+            user : action.payload
+        }
         default :
         return {
             ...state

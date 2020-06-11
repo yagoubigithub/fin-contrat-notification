@@ -25,9 +25,10 @@ import EmployeeTable from "./tables/EmployeeTable";
 
 class Employee extends Component {
   state = {
-    delete_button_text: "Suprimer",
+    delete_button_text: "Supprimer",
     employees: [],
     employeeCorebeille: [],
+    employeeContratEpiration :[],
     rowsSelected: [],
     tab: "employees",
     addToCorbeilleDialog: false,
@@ -40,8 +41,12 @@ class Employee extends Component {
     if (nextProps.employees) {
       const employeeCorebeille = [];
       const employees = [];
+
+     const  employeeContratEpiration = [];
+
       let employeesCounter = 1 ;
       let  employeeCorebeilleCounter = 1;
+      let  employeeContratEpirationCounter = 1;
       nextProps.employees.map((employee) => {
         if (employee.status === "undo") {
           employees.push({number : employeesCounter,...employee});
@@ -52,10 +57,15 @@ class Employee extends Component {
           employeeCorebeille.push({number : employeeCorebeilleCounter,...employee});
           employeeCorebeilleCounter++;
         }
+        if((new Date().getTime() > new Date(employee.date_fin).getTime()) && employee.status === "undo"){
+          employeeContratEpiration.push({number : employeeContratEpirationCounter,...employee});
+          employeeContratEpirationCounter++;
+
+        }
       });
      
 
-      this.setState({ employeeCorebeille, employees });
+      this.setState({ employeeCorebeille, employees , employeeContratEpiration });
     }
   }
 
@@ -179,6 +189,21 @@ class Employee extends Component {
 
           <Tab
             index={1}
+            title="Contrats terminés"
+            onClick={() => this.handleChangeTab("employeeContratEpiration")}      
+          >
+            <EmployeeTable
+              checkBoxColumn
+              IconsColumn
+              rowsSelected={this.state.rowsSelected}
+              sendData={this.getData}
+              rows={this.state.employeeContratEpiration}
+             
+            />
+          </Tab>
+
+          <Tab
+            index={2}
             title="Corbeille"
             onClick={() => this.handleChangeTab("employeeCorebeille")}      
           >

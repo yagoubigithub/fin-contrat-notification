@@ -67,13 +67,42 @@ function User() {
  
   //get user
   ipcMain.on("user", (event, value) => {
+    if(value.username){
+      db.all(
+        `SELECT * FROM user WHERE username='${value.username}' AND password='${value.password}' AND id=1`,
+        function (err, rows) {
+          if (err) mainWindow.webContents.send("user", err);
+          mainWindow.webContents.send("user", rows);
+        }
+      );
+    } else {
+      db.all(
+        `SELECT * FROM user WHERE  id=1`,
+        function (err, rows) {
+          if (err) mainWindow.webContents.send("user", err);
+          mainWindow.webContents.send("user", rows);
+        }
+      );
+    }
+ 
+  });
+
+  ipcMain.on("auth:modifier", (event, value) => {
+
+    db.run(
+      `UPDATE user  SET  username='${value.username}',password='${value.password}'  WHERE id=1;`,
+      function(err) {
+        if (err) mainWindow.webContents.send("auth:modifier", err);
+      
     db.all(
       `SELECT * FROM user WHERE username='${value.username}' AND password='${value.password}' AND id=1`,
       function (err, rows) {
-        if (err) mainWindow.webContents.send("user", err);
-        mainWindow.webContents.send("user", rows);
+        if (err) mainWindow.webContents.send("auth:modifier", err);
+        mainWindow.webContents.send("auth:modifier", rows);
       }
     );
+      });
+
   });
   
 }
