@@ -142,7 +142,7 @@ class Employee extends Component {
         />
         <div className="sous-nav-container">
         <h1 style={{color: "white", marginRight : 50}}>Employé</h1>
-          <NavLink onClick={this.props.getAllEmployee} to="/employee">
+          <NavLink onClick={this.props.getAllEmployee} to="/employees">
             <button className="btn btn-nav">Actualisé</button>
           </NavLink>
 

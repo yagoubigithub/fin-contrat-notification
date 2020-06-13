@@ -2,20 +2,32 @@ import React, { Component } from "react";
 
 import { NavLink } from "react-router-dom";
 
+//Mui
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions  from "@material-ui/core/DialogActions";
+import Button  from "@material-ui/core/Button";
+
 // redux
 import { connect } from "react-redux";
 
 //icons
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
-import AssignmentIcon from "@material-ui/icons/Assignment";
-import AssessmentIcon from "@material-ui/icons/Assessment";
-import DomainIcon from "@material-ui/icons/Domain";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import DescriptionIcon from "@material-ui/icons/Description";
-import WorkIcon from "@material-ui/icons/Work";
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import PersonIcon from '@material-ui/icons/Person';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 
+
 class Navbar extends Component {
+  state = {
+    copyRight : false,
+  }
+  openCloseCopyRight = () =>{
+    this.setState({
+      copyRight : !this.state.copyRight
+    })
+  }
   render() {
     return (
       <nav className="nav">
@@ -30,7 +42,7 @@ class Navbar extends Component {
             className="nav-link"
           >
             <span className="nav-link-icon">
-              <AssignmentIndIcon />
+              <PersonAddIcon />
             </span>
 
             <span>Ajouter Employé</span>
@@ -53,7 +65,7 @@ class Navbar extends Component {
             className="nav-link"
           >
             <span className="nav-link-icon">
-              <FormatListNumberedIcon />
+              <NotificationsIcon />
             </span>
 
             <span>Alarme</span>
@@ -65,13 +77,29 @@ class Navbar extends Component {
             className="nav-link"
           >
             <span className="nav-link-icon">
-              <FormatListNumberedIcon />
+              <PersonIcon />
             </span>
 
             <span>User</span>
           </NavLink>
+
+          <p className="copyRight" onClick={this.openCloseCopyRight}>By Atech-info</p>
+          <Dialog open={this.state.copyRight} onClose={this.openCloseCopyRight} style={{padding : 15}}>
+         
+          <img src="/logo250-atech.png" />
+          <p style={{margin : 5}}>Email : contact@atech-info.com</p>
+          <p style={{margin : 5}}>Website : https://atech-info.com/</p>
+          <p style={{margin : 5}}>Télephone : 99999</p>
+
+          <DialogActions
+          >
+            <Button variant="contained" color="primary" onClick={this.openCloseCopyRight}>Cancel</Button>
+          </DialogActions>
+
+          </Dialog>
          
         </div>
+        
       </nav>
     );
   }

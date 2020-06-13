@@ -54,7 +54,9 @@ import { modifierUser , getUser} from '../store/actions/authAction'
         return (
             <div>
                 
-                <h1>Alarme</h1>
+                <div className="sous-nav-container">
+        <h1 style={{color: "white", marginRight : 50}}>   User</h1>
+        </div>
                 <LoadingComponent
           loading={
             this.props.loading !== undefined ? this.props.loading : false

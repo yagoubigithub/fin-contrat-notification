@@ -34,6 +34,8 @@ import {ajouterEmployee , removeEmployeeCreated} from '../../store/actions/emplo
 
 class AjouterEmployee extends Component {
     state = {
+      error : "",
+      success : "",
         nom : "",
         prenom : "",
         adresse :"",
@@ -94,14 +96,21 @@ class AjouterEmployee extends Component {
     render() {
         return (
             <div>
+            
  <LoadingComponent
           loading={
             this.props.loading !== undefined ? this.props.loading : false
           }
         />
 
-              <div className="alert error">{this.state.error} </div>
-        <div className="alert success">{this.state.success} </div>
+<div className="sous-nav-container">
+        <h1 style={{color: "white", marginRight : 50}}>  Ajouter Employé</h1>
+        </div>
+        {this.state.error !== "" ?   <div className="alert error">{this.state.error} </div> : null}
+        {this.state.success !== "" ?   <div className="alert success">{this.state.success} </div> : null}
+
+            
+       
                
             <Grid container spacing={2} style={{padding : 10}}>
            

@@ -44,7 +44,7 @@ import TaskBar from '../TaskBar';
           <div className="container-auth">
            <form onSubmit={this.handleSubmit} className="form-auth">
                <span className="error-auth">{this.props.auth.error}</span>
-               <input className="input-auth" onChange={this.handleChange} name="username" type="text" placeholder="Username" />
+               <input className="input-auth" onChange={this.handleChange} name="username" type="text" placeholder="Nom d'utilisateur" />
                <input className="input-auth"   onChange={this.handleChange} name="password" type="password" placeholder="Mot de passe" />
                <input type="submit" className="button-auth" value="Connexion"/>
                

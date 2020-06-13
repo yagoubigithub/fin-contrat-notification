@@ -287,31 +287,6 @@ class EmployeeTable extends Component {
         ),
       },
       {
-        Header: "Date de fin de contrat",
-        accessor: "date_fin",
-        width: 250,
-        Cell: (props) => (
-          <div className="cell">
-            {props.value !== "undefined" ? props.value : ""}
-          </div>
-        ),
-        Filter: ({ filter, onChange }) => (
-          <div className="searchtable-container">
-            <label htmlFor="date-input-date_fin">
-              <SearchIcon className="searchtable-icon" />
-            </label>
-
-            <input
-              type="text"
-              id="date-input-date_fin"
-              className="searchtable-input"
-              onChange={(event) => onChange(event.target.value)}
-              value={filter ? filter.value : ""}
-            />
-          </div>
-        ),
-      },
-      {
         Header: "Date de début de contrat",
         accessor: "date_debut",
         width: 250,
@@ -320,21 +295,44 @@ class EmployeeTable extends Component {
             {props.value !== "undefined" ? props.value : ""}
           </div>
         ),
-        Filter: ({ filter, onChange }) => (
-          <div className="searchtable-container">
-            <label htmlFor="date-input-date_debut">
-              <SearchIcon className="searchtable-icon" />
-            </label>
-
-            <input
-              type="text"
-              id="date-input-date_debut"
-              className="searchtable-input"
-              onChange={(event) => onChange(event.target.value)}
-              value={filter ? filter.value : ""}
-            />
+        Filter: ({ filter, onChange }) =>
+        <div className="searchtable-container">
+        <label htmlFor="date-input-date_debut">
+          <SearchIcon className="searchtable-icon" />
+        </label>
+        
+          <input type="date"
+          id="date-input-date_debut"
+          className="searchtable-input"
+         onChange={event => onChange(event.target.value)}
+       
+        value={filter ? filter.value : new Date().toDateString()}/>
+        </div>
+      
+      },
+      {
+        Header: "Date de fin de contrat",
+        accessor: "date_fin",
+        width: 250,
+        Cell: (props) => (
+          <div className="cell">
+            {props.value !== "undefined" ? props.value : ""}
           </div>
         ),
+        Filter: ({ filter, onChange }) =>
+        <div className="searchtable-container">
+        <label htmlFor="date-input-date_entree">
+          <SearchIcon className="searchtable-icon" />
+        </label>
+        
+          <input type="date"
+          id="date-input-date_entree"
+          className="searchtable-input"
+         onChange={event => onChange(event.target.value)}
+       
+        value={filter ? filter.value : new Date().toDateString()}/>
+        </div>
+        
       }
     ];
 
@@ -506,7 +504,7 @@ class EmployeeTable extends Component {
               String(row[filter.id]) === filter.value
             }
             columns={columns}
-            defaultPageSize={this.props.type === "choose-one" ? 5 : 8}
+            defaultPageSize={5}
           />
         </div>
       </Fragment>
