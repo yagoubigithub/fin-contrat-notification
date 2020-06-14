@@ -46,8 +46,9 @@ export const getAlarme = () =>{
             type : "STOP_LOADING_ALARME"
         });
         if(data[0] !== undefined){
+            
 
-            dispatch({type: "GET_ALARME",  action : data[0]})
+            dispatch({type: "GET_ALARME",  payload : data[0]})
         }else{
             dispatch({
                 type : "ALARME_ERROR",

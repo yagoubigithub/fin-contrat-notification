@@ -27,7 +27,7 @@ const alarmeReducer = (state = initStat, action) =>{
                 error : action.payload
             }
 
-           case 'GET_ALARME' :
+         case 'GET_ALARME' :
                return {
                    ...state,
                    alarme :action.payload

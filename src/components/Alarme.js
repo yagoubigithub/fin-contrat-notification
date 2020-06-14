@@ -25,8 +25,8 @@ import { getAlarme, modifierAlarme } from "../store/actions/alarmAction";
 
 class Alarme extends Component {
   state = {
-    repeter: "jours",
-    son: "railroad_crossing_bell-Brylon_Terry-1551570865.mp3",
+    repeter: "",
+    son: "",
     play: false,
   };
 
@@ -34,7 +34,9 @@ class Alarme extends Component {
     this.props.getAlarme();
   }
   componentWillReceiveProps(nextProps) {
+   
     if (nextProps.alarme) {
+    
       this.setState({ ...nextProps.alarme });
     }
   }
