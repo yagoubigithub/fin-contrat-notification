@@ -73,6 +73,11 @@ const employeeReducer = (state = initStat, action) =>{
                     error : null,
 
                 }
+            case 'READ_FILE_EMPLOYEE' :
+                return {
+                    ...state,
+                    myFile : action.payload
+                }
      
         default :
         return {

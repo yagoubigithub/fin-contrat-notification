@@ -13,7 +13,7 @@ let mainWindow = new BrowserWindow({
     },
    width : 900,
    height : 700,
-    resizable :false,
+   // resizable :false,
   //  frame : false,
     icon: `${path.join(__dirname, "./assets/logo.png")}`
   });

@@ -1,6 +1,7 @@
 const {   ipcMain } =  require("electron");
 const db = require('./db')
 const mainWindow = require('./mainWindow');
+const xlsx = require('xlsx');
 
 
 const methode = Employee.prototype;
@@ -81,10 +82,6 @@ function Employee(){
 
   if (value.id !== undefined) {
     // get one maitre_douvrage
-
-    
-  
-
     db.run(
       `UPDATE employee  SET status='${value.status}' WHERE id = ${value.id};`,
       function(err) {
@@ -128,6 +125,40 @@ ipcMain.on("employee:modifier", (event, value) => {
 
 }
 
+
+ipcMain.on('employee:readFile',  (event, value) => {
+  const myFile = {};
+  if(value.path){
+   const wb  = xlsx.readFile(value.path,{
+     cellDates : true
+   });
+   new Promise((resolve,reject)=>{
+    wb.SheetNames.forEach(sheetName=>{
+      const ws = wb.Sheets[sheetName];
+      const data = xlsx.utils.sheet_to_json(ws);
+  
+      myFile[sheetName] = data;
+      if(Object.keys(myFile).length === wb.SheetNames.length){
+        resolve()
+      }
+  
+  
+    })
+    
+   
+
+   }).then(()=>{
+    mainWindow.webContents.send("employee:readFile", myFile);
+   })
+ 
+  
+
+
+
+
+  }
+
+})
 
 
 function ReturnAllEmployee(){

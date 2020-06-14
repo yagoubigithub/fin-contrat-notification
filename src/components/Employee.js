@@ -17,10 +17,16 @@ import {
   getAllEmployee,
   addToCorbeille,
   undoDeleteEmployee,
+  readFile
 } from "../store/actions/employeeAction";
 import { connect } from "react-redux";
 
 import EmployeeTable from "./tables/EmployeeTable";
+
+
+import xlsx from 'node-xlsx';
+import Import from "../store/Import";
+
 
 
 class Employee extends Component {
@@ -32,6 +38,8 @@ class Employee extends Component {
     rowsSelected: [],
     tab: "employees",
     addToCorbeilleDialog: false,
+    importDialog : false,
+    myFile : {}
   };
   componentDidMount() {
     this.props.getAllEmployee();
@@ -66,6 +74,10 @@ class Employee extends Component {
      
 
       this.setState({ employeeCorebeille, employees , employeeContratEpiration });
+    }
+
+    if(nextProps.myFile){
+      this.setState({myFile : nextProps.myFile})
     }
   }
 
@@ -132,6 +144,28 @@ class Employee extends Component {
     });
     this.setState({ rowsSelected: [] });
   };
+
+  import = () =>{
+    const fileInput = document.getElementById("file");
+    fileInput.click();
+
+  }
+
+  handleFileInputChange=(e)=>{
+    const file  = e.target.files[0];
+    const path  = file.path;
+    this.props.readFile(path);
+    this.handleOpenCloseImportDialog()
+  }
+  handleOpenCloseImportDialog = () =>{
+
+   this.setState({
+     importDialog  : ! this.state.importDialog
+   })
+  
+
+
+  }
   render() {
     return (
       <div>
@@ -150,7 +184,24 @@ class Employee extends Component {
           <button className="btn btn-nav" onClick={this.Supprimer}>
             {this.state.delete_button_text}
           </button>
+
+          <button className="btn btn-nav" onClick={this.export}>Export</button>
+
+          <button className="btn btn-nav" onClick={this.import}>Import</button>
+          <input type="file" id="file" accept=".xlsx,.xls" id="file" hidden onChange={this.handleFileInputChange} />
         </div>
+
+        <Dialog  open={this.state.importDialog}
+          onClose={this.handleOpenCloseImportDialog}>
+           <LoadingComponent
+          loading={
+            this.props.loading !== undefined ? this.props.loading : false
+          }
+        />
+        <h1>File</h1>
+        <Import myFile={this.state.myFile} />
+
+        </Dialog>
 
         <Dialog
           open={this.state.addToCorbeilleDialog}
@@ -226,9 +277,11 @@ const mapActionToProps = (dispatch) => ({
   getAllEmployee: () => dispatch(getAllEmployee()),
   addToCorbeille: (id) => dispatch(addToCorbeille(id)),
   undoDeleteEmployee: (id) => dispatch(undoDeleteEmployee(id)),
+  readFile :  (path)=>dispatch(readFile(path))
 });
 const mapStateToProps = (state) => ({
   employees: state.employee.employees,
   loading: state.employee.loading,
+  myFile :  state.employee.myFile
 });
 export default connect(mapStateToProps, mapActionToProps)(Employee);

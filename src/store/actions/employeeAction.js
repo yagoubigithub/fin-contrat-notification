@@ -217,3 +217,33 @@ export const undoDeleteEmployee = (id) =>{
 
   }
   }
+
+  export const readFile  = (path) =>{
+    return (dispatch,getState) =>{
+      dispatch({
+        type : "LOADING_EMPLOYEE"
+    })
+    ipcRenderer.send("employee:readFile", {path});
+  
+    ipcRenderer.once('employee:readFile', function (event,data) {
+     
+      dispatch({
+        type : "STOP_LOADING_EMPLOYEE"
+    });
+   
+    if(data){
+      dispatch({
+          type : "READ_FILE_EMPLOYEE",
+          payload : data
+      });
+    }else{
+      dispatch({
+        type : "ERROR_EMPLOYEE",
+        payload : data
+    });
+    }
+  });
+  
+    
+    }
+  }

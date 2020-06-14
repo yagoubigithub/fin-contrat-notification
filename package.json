@@ -39,7 +39,8 @@
     "redux-thunk": "^2.3.0",
     "sqlite": "^3.0.3",
     "v8-compile-cache": "^2.1.1",
-    "wait-on": "^3.3.0"
+    "wait-on": "^3.3.0",
+    "xlsx": "^0.16.2"
   },
   "scripts": {
     "react-start": "react-scripts start",
