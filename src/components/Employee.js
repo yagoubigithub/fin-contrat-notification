@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Route } from "react-router-dom";
+
 
 import { Tab, Tabs } from "react-tabs-css";
 
@@ -17,15 +17,15 @@ import {
   getAllEmployee,
   addToCorbeille,
   undoDeleteEmployee,
-  readFile
+  readFile,
+  removeMyFile
 } from "../store/actions/employeeAction";
 import { connect } from "react-redux";
 
 import EmployeeTable from "./tables/EmployeeTable";
 
 
-import xlsx from 'node-xlsx';
-import Import from "../store/Import";
+import Import from "./Import";
 
 
 
@@ -152,16 +152,23 @@ class Employee extends Component {
   }
 
   handleFileInputChange=(e)=>{
+    this.handleOpenCloseImportDialog()
     const file  = e.target.files[0];
     const path  = file.path;
+    e.target.value = ""
     this.props.readFile(path);
-    this.handleOpenCloseImportDialog()
+   
   }
   handleOpenCloseImportDialog = () =>{
 
    this.setState({
      importDialog  : ! this.state.importDialog
-   })
+   }, ()=>{
+    if( !this.state.importDialog ){
+      this.props.removeMyFile()
+
+    }
+  })
   
 
 
@@ -192,14 +199,22 @@ class Employee extends Component {
         </div>
 
         <Dialog  open={this.state.importDialog}
-          onClose={this.handleOpenCloseImportDialog}>
-           <LoadingComponent
+          onClose={this.handleOpenCloseImportDialog}
+          
+         maxWidth="xl"
+         fullWidth={true}
+          
+         >
+         <div style={{height : 500}}>
+                <LoadingComponent
           loading={
             this.props.loading !== undefined ? this.props.loading : false
           }
         />
-        <h1>File</h1>
+        
         <Import myFile={this.state.myFile} />
+         </div>
+      
 
         </Dialog>
 
@@ -225,6 +240,7 @@ class Employee extends Component {
      {    <Tabs>
           <Tab
             index={0}
+            group="employee"
             title="Tous les Employées"
             onClick={() => this.handleChangeTab("employees")}
           >
@@ -240,6 +256,7 @@ class Employee extends Component {
 
           <Tab
             index={1}
+            group="employee"
             title="Contrats terminés"
             onClick={() => this.handleChangeTab("employeeContratEpiration")}      
           >
@@ -255,6 +272,7 @@ class Employee extends Component {
 
           <Tab
             index={2}
+            group="employee"
             title="Corbeille"
             onClick={() => this.handleChangeTab("employeeCorebeille")}      
           >
@@ -277,7 +295,8 @@ const mapActionToProps = (dispatch) => ({
   getAllEmployee: () => dispatch(getAllEmployee()),
   addToCorbeille: (id) => dispatch(addToCorbeille(id)),
   undoDeleteEmployee: (id) => dispatch(undoDeleteEmployee(id)),
-  readFile :  (path)=>dispatch(readFile(path))
+  readFile :  (path)=>dispatch(readFile(path)),
+  removeMyFile : () =>dispatch(removeMyFile())
 });
 const mapStateToProps = (state) => ({
   employees: state.employee.employees,

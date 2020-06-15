@@ -247,3 +247,12 @@ export const undoDeleteEmployee = (id) =>{
     
     }
   }
+
+  export const removeMyFile = ()=>{
+    return (dispatch, getState)=>{
+      dispatch({
+        type : "REMOVE_MY_FILE"
+      })
+
+    }
+  }

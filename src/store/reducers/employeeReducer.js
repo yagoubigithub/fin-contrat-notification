@@ -78,6 +78,11 @@ const employeeReducer = (state = initStat, action) =>{
                     ...state,
                     myFile : action.payload
                 }
+         case 'REMOVE_MY_FILE':
+             return {
+                 ...state,
+                 myFile : null
+             }
      
         default :
         return {
