@@ -23,11 +23,10 @@ export default class StaticTable extends Component {
     rows : []
   };
 
-  componentWillMount(){
-  
-  }
+ 
   
   handleSelectChange = (e, key) => {
+    e.preventDefault();
     const title = e.target.value;
     
     const choose = [...this.state.choose];
@@ -55,6 +54,19 @@ export default class StaticTable extends Component {
     }
   
   };
+  ifTitleExist = (selectValue,title) =>{
+
+    let exist = false;
+    Object.keys(selectValue).map(key=>{
+      if(selectValue[key] === title){
+        exist = true;
+        return;
+      }
+
+    })
+
+    return exist;
+  }
   render() {
    
 
