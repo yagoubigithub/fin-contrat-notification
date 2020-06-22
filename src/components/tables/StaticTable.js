@@ -4,6 +4,7 @@ import ReactTable from "react-table";
 
 //Mui
 
+import Checkbox from '@material-ui/core/Checkbox'
 
 
 export default class StaticTable extends Component {
@@ -20,10 +21,60 @@ export default class StaticTable extends Component {
     ],
     choose: [],
     selectValue: {},
-    rows : []
+    rows : [],
+    selectedAll : false,
+    rowsSelected : []
   };
 
+
+  handleSelectAllChange = (e) =>{
+    if(this.state.selectedAll){
+      this.setState({
+        selectedAll : false,
+        rowsSelected : []
+      }, () => {
+        this.props.sendData({rowsSelected,title : this.props.title });
+      })
+      return;
+    }
+    const rowsSelected= [... this.props.rows]
+
+    this.setState({
+      selectedAll : true,
+      rowsSelected 
+    },  () => {
+      this.props.sendData({rowsSelected,title : this.props.title });
+    })
+
+
+
+  }
  
+
+  handeleCheckCheckboxRow = (e, row) => {
+    const rowsSelected = [...this.state.rowsSelected];
+    if (this.checkRowIsSelected(row.id)) {
+      console.log("is selected")
+      //unselect
+      rowsSelected.splice(
+        rowsSelected.findIndex((item) => row.id == item.id),
+        1
+      );
+    } else {
+      //select
+      rowsSelected.push(row);
+    }
+
+    if (rowsSelected.length === 0) this.setState({ selectedAll: false });
+    this.setState({ rowsSelected }, () => {
+      this.props.sendData({rowsSelected,title : this.props.title });
+    });
+  }
+
+  checkRowIsSelected = (id) => {
+    const rowsSelected = [...this.state.rowsSelected];
+    return rowsSelected.filter((row) => row.id == id).length > 0;
+  };
   
   handleSelectChange = (e, key) => {
     e.preventDefault();
@@ -111,6 +162,43 @@ export default class StaticTable extends Component {
           );
         },
       };
+    });
+
+    columns.unshift({
+      Header: (
+        <div
+          style={{
+            backgroundColor: "#E4E4E4",
+            border: "1px solid rgba(0,0,0,0.45)",
+          }}
+        >
+          <Checkbox
+            key={"check-all-voiture-key"}
+            id="check-all-voiture-id"
+            style={{ padding: 3 }}
+            checked={this.state.selectedAll}
+            onChange={this.handleSelectAllChange}
+            color="primary"
+          />
+        </div>
+      ),
+      sortable: false,
+      filterable: false,
+      accessor: "id",
+      width: 50,
+
+      Cell: (props) => (
+        <div className={`cell `}>
+          <Checkbox
+            value={props.value}
+            key={`key-checkbox-table-voiture-${props.value}`}
+            id={`id-checkbox-table-voiture-${props.value}`}
+            onChange={(e) => this.handeleCheckCheckboxRow(e, props.original)}
+            checked={this.checkRowIsSelected(props.value)}
+            style={{ padding: 3 }}
+          />
+        </div>
+      ),
     });
     return (
       <div>

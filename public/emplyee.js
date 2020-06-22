@@ -150,6 +150,7 @@ ipcMain.on("employee:readFile", (event, value) => {
         }
         console.log(head);
         const array = []
+       let  id = 1;
 
         for (let j = Number.parseInt(_d[0]) + 1; j <= Number.parseInt(_d[1]); j++) {
           const obj = {}
@@ -157,6 +158,7 @@ ipcMain.on("employee:readFile", (event, value) => {
 
           for (let i = _l[0].charCodeAt(0) ; i <= _l[1].charCodeAt(0); i++) {
 
+            obj.id = id;
             obj[ws[`${String.fromCharCode(i)}${_d[0]}`] !== undefined
             ? ws[`${String.fromCharCode(i)}${_d[0]}`].v
             : "_Empty"] = ws[`${String.fromCharCode(i)}${j}`] !== undefined
@@ -164,6 +166,7 @@ ipcMain.on("employee:readFile", (event, value) => {
             : "_Empty";
           }
         array.push(obj)
+        id++;
 
 
         }
