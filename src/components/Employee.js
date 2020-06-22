@@ -39,7 +39,7 @@ class Employee extends Component {
     tab: "employees",
     addToCorbeilleDialog: false,
     importDialog : false,
-    myFile : {}
+    myFile : []
   };
   componentDidMount() {
     this.props.getAllEmployee();

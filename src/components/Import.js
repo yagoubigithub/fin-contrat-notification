@@ -6,17 +6,23 @@ import StaticTable from './tables/StaticTable'
 
 export default class Import extends Component {
     componentDidMount(){
-        console.log(this.props.myFile)
+        
     }
     render() {
-        const display =  Object.keys(this.props.myFile).map((key, index)=>
-            <Tab  group="myFile" key={index} index={index} title={key}>
-            <StaticTable rows={this.props.myFile[key]} />
+        let display = null;
+        console.log(this.props.myFile)
+        if(this.props.myFile !== [])
+          display = this.props.myFile.map((file, index)=>
+            <Tab  group="myFile" active={index === 0} key={index} index={`${index}-import`} title={file.name}>
+          
+          <StaticTable rows={file.array} head={file.head} />
 
-            </Tab>)
+           </Tab>)
         return (
             <Tabs>
-               {display}
+               {
+                   display
+               }
                 
             </Tabs>
         )

@@ -2,8 +2,13 @@ import React, { Component } from "react";
 
 import ReactTable from "react-table";
 
+//Mui
+
+
+
 export default class StaticTable extends Component {
   state = {
+    exportBtn : false,
     defaultColumns: [
       "Nom",
       "Prénom",
@@ -15,30 +20,13 @@ export default class StaticTable extends Component {
     ],
     choose: [],
     selectValue: {},
+    rows : []
   };
 
-  componentDidMount() {
-    const selectValue = { ...this.state.selectValue };
-    Object.keys(this.props.rows[0]).map((key) => {
-      selectValue[key] = "0";
-    });
-    this.setState({
-      selectValue,
-    });
+  componentWillMount(){
+  
   }
-  ifTitleExist = (selectValue,title) =>{
-
-    let exist = false;
-    Object.keys(selectValue).map(key=>{
-      if(selectValue[key] === title){
-        exist = true;
-        return;
-      }
-
-    })
-
-    return exist;
-  }
+  
   handleSelectChange = (e, key) => {
     const title = e.target.value;
     
@@ -68,9 +56,9 @@ export default class StaticTable extends Component {
   
   };
   render() {
-    const rows = this.props.rows;
+   
 
-    const columns = Object.keys(rows[0]).map((key) => {
+    const columns = this.props.head.map((key) => {
       return {
         Header: key,
         accessor: key,
@@ -85,7 +73,7 @@ export default class StaticTable extends Component {
               : props.value.toString().split("T")[0];
             return (
               <div className="cell">
-                {props.value !== "undefined" ? render : ""}
+                {props.value !== "_Empty" ? render : ""}
               </div>
             );
           }
@@ -116,7 +104,7 @@ export default class StaticTable extends Component {
       <div>
         <ReactTable
           className="table"
-          data={rows}
+          data={this.props.rows}
           filterable
           defaultFilterMethod={(filter, row) =>
             String(row[filter.id]) === filter.value
@@ -124,6 +112,7 @@ export default class StaticTable extends Component {
           columns={columns}
           defaultPageSize={5}
         />
+       
       </div>
     );
   }
