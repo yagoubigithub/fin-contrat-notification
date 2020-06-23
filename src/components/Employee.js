@@ -205,7 +205,7 @@ class Employee extends Component {
          fullWidth={true}
           
          >
-         <div style={{height : 500}}>
+         <div >
                 <LoadingComponent
           loading={
             this.props.loading !== undefined ? this.props.loading : false

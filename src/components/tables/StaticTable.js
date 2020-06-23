@@ -33,7 +33,7 @@ export default class StaticTable extends Component {
         selectedAll : false,
         rowsSelected : []
       }, () => {
-        this.props.sendData({rowsSelected,title : this.props.title });
+        this.props.sendData({rowsSelected : [],title : this.props.title });
       })
       return;
     }

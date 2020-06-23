@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Tab, Tabs } from "react-tabs-css";
 
 import StaticTable from './tables/StaticTable'
+import { Button } from '@material-ui/core';
 
 export default class Import extends Component {
     
@@ -22,19 +23,24 @@ export default class Import extends Component {
         console.log(this.props.myFile)
         if(this.props.myFile !== [])
           display = this.props.myFile.map((file, index)=>
-            <Tab  group="myFile" active={index === 0} key={index} index={`${index}-import`} title={file.name}>
+            <Tab style={{border :" 1px solid red"}} group="myFile" active={index === 0} key={index} index={`${index}-import`} title={file.name}>
           
           <StaticTable 
               sendData={this.getData} title={file.name} rows={file.array} head={file.head} />
 
            </Tab>)
         return (
-            <Tabs>
+            <div>
+                  <Tabs style={{minHeight : 400}}>
                {
                    display
                }
                 
             </Tabs>
+
+            <Button>Import</Button>
+            </div>
+          
         )
     }
 }
