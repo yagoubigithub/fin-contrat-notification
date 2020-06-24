@@ -18,7 +18,8 @@ import {
   addToCorbeille,
   undoDeleteEmployee,
   readFile,
-  removeMyFile
+  removeMyFile,
+  _export
 } from "../store/actions/employeeAction";
 import { connect } from "react-redux";
 
@@ -145,6 +146,12 @@ class Employee extends Component {
     this.setState({ rowsSelected: [] });
   };
 
+
+  _export = () => {
+
+    this.props._export();
+  }
+
   import = () =>{
     const fileInput = document.getElementById("file");
     fileInput.click();
@@ -192,7 +199,7 @@ class Employee extends Component {
             {this.state.delete_button_text}
           </button>
 
-          <button className="btn btn-nav" onClick={this.export}>Export</button>
+          <button className="btn btn-nav" onClick={this._export}>Export</button>
 
           <button className="btn btn-nav" onClick={this.import}>Import</button>
           <input type="file" id="file" accept=".xlsx,.xls" id="file" hidden onChange={this.handleFileInputChange} />
@@ -296,7 +303,8 @@ const mapActionToProps = (dispatch) => ({
   addToCorbeille: (id) => dispatch(addToCorbeille(id)),
   undoDeleteEmployee: (id) => dispatch(undoDeleteEmployee(id)),
   readFile :  (path)=>dispatch(readFile(path)),
-  removeMyFile : () =>dispatch(removeMyFile())
+  removeMyFile : () =>dispatch(removeMyFile()),
+  _export :  ()=>dispatch(_export())
 });
 const mapStateToProps = (state) => ({
   employees: state.employee.employees,

@@ -242,9 +242,7 @@ export const undoDeleteEmployee = (id) =>{
         payload : data
     });
     }
-  });
-  
-    
+  });  
     }
   }
 
@@ -254,5 +252,34 @@ export const undoDeleteEmployee = (id) =>{
         type : "REMOVE_MY_FILE"
       })
 
+    }
+  }
+
+
+  export const _export  = () =>{
+    return (dispatch , getState)=>{
+      dispatch({
+        type : "LOADING_EMPLOYEE"
+    })
+    ipcRenderer.send("employee:export", {});
+  
+    ipcRenderer.once('employee:export', function (event,data) {
+     
+      dispatch({
+        type : "STOP_LOADING_EMPLOYEE"
+    });
+   
+    if(data){
+      dispatch({
+          type : "EXPORT_EMPLOYEE",
+          payload : data
+      });
+    }else{
+      dispatch({
+        type : "ERROR_EMPLOYEE",
+        payload : data
+    });
+    }
+  }); 
     }
   }

@@ -83,6 +83,13 @@ const employeeReducer = (state = initStat, action) =>{
                  ...state,
                  myFile : null
              }
+
+             case 'EXPORT_EMPLOYEE' :
+
+             return {
+                 ...state,
+                 export  : true
+             }
      
         default :
         return {

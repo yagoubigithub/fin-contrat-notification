@@ -1,7 +1,14 @@
-const { ipcMain } = require("electron");
+const { ipcMain ,dialog } = require("electron");
 const db = require("./db");
 const mainWindow = require("./mainWindow");
 const xlsx = require("xlsx");
+const converter = require('json-2-csv');
+
+const fs = require('fs')
+
+//utils
+
+const {getCurrentDateTime } = require('./utils/methods')
 
 const methode = Employee.prototype;
 
@@ -104,98 +111,115 @@ function Employee() {
       );
     }
   });
+
+  ipcMain.on("employee:readFile", (event, value) => {
+    const result = [];
+    if (value.path) {
+      const wb = xlsx.readFile(value.path, {
+        cellDates: true,
+      });
+      new Promise((resolve, reject) => {
+        wb.SheetNames.forEach((sheetName, index) => {
+          const ws = wb.Sheets[sheetName];
+          let l = ws["!ref"].split(/\d+/gi);
+          let d = ws["!ref"].split(/[A-Z]+/gi);
+  
+          const head = [];
+  
+          const _d = [];
+          const _l = [];
+  
+          d.map((val1) => {
+            if (val1 !== "") {
+              if (val1.indexOf(":") != -1) {
+                val1 = val1.replace(":", "");
+              }
+              _d.push(val1);
+            }
+          });
+  
+          l.map((val) => {
+            if (val !== "") {
+              if (val.indexOf(":") != -1) {
+                val = val.replace(":", "");
+              }
+              _l.push(val);
+            }
+          });
+  
+          for (let i = _l[0].charCodeAt(0); i <= _l[1].charCodeAt(0); i++) {
+            head.push(
+              ws[`${String.fromCharCode(i)}${_d[0]}`] !== undefined
+                ? ws[`${String.fromCharCode(i)}${_d[0]}`].v
+                : undefined
+            );
+          }
+          console.log(head);
+          const array = []
+         let  id = 1;
+  
+          for (let j = Number.parseInt(_d[0]) + 1; j <= Number.parseInt(_d[1]); j++) {
+            const obj = {}
+           
+  
+            for (let i = _l[0].charCodeAt(0) ; i <= _l[1].charCodeAt(0); i++) {
+  
+              obj.id = id;
+              obj[ws[`${String.fromCharCode(i)}${_d[0]}`] !== undefined
+              ? ws[`${String.fromCharCode(i)}${_d[0]}`].v
+              : "_Empty"] = ws[`${String.fromCharCode(i)}${j}`] !== undefined
+              ? ws[`${String.fromCharCode(i)}${j}`].v
+              : "_Empty";
+            }
+          array.push(obj)
+          id++;
+  
+  
+          }
+          console.log(array)
+  
+          
+      
+       result.push({
+         name : sheetName,
+         array, 
+         head
+  
+       })
+  
+     
+  
+          if (result.length === wb.SheetNames.length) {
+            resolve();
+          }
+        });
+      })
+        .then(() => {
+          mainWindow.webContents.send("employee:readFile", result);
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
+    }
+  });
+  
+  
+  ipcMain.on("employee:export", (event, value) => {
+  
+    generateCSV().then(() => {
+      mainWindow.webContents.send("employee:export", {export : true});
+    })
+    .catch((err) => {
+      mainWindow.webContents.send("employee:export", err);
+    });
+  
+  
+  });
+  
 }
 
-ipcMain.on("employee:readFile", (event, value) => {
-  const result = [];
-  if (value.path) {
-    const wb = xlsx.readFile(value.path, {
-      cellDates: true,
-    });
-    new Promise((resolve, reject) => {
-      wb.SheetNames.forEach((sheetName, index) => {
-        const ws = wb.Sheets[sheetName];
-        let l = ws["!ref"].split(/\d+/gi);
-        let d = ws["!ref"].split(/[A-Z]+/gi);
-
-        const head = [];
-
-        const _d = [];
-        const _l = [];
-
-        d.map((val1) => {
-          if (val1 !== "") {
-            if (val1.indexOf(":") != -1) {
-              val1 = val1.replace(":", "");
-            }
-            _d.push(val1);
-          }
-        });
-
-        l.map((val) => {
-          if (val !== "") {
-            if (val.indexOf(":") != -1) {
-              val = val.replace(":", "");
-            }
-            _l.push(val);
-          }
-        });
-
-        for (let i = _l[0].charCodeAt(0); i <= _l[1].charCodeAt(0); i++) {
-          head.push(
-            ws[`${String.fromCharCode(i)}${_d[0]}`] !== undefined
-              ? ws[`${String.fromCharCode(i)}${_d[0]}`].v
-              : undefined
-          );
-        }
-        console.log(head);
-        const array = []
-       let  id = 1;
-
-        for (let j = Number.parseInt(_d[0]) + 1; j <= Number.parseInt(_d[1]); j++) {
-          const obj = {}
-         
-
-          for (let i = _l[0].charCodeAt(0) ; i <= _l[1].charCodeAt(0); i++) {
-
-            obj.id = id;
-            obj[ws[`${String.fromCharCode(i)}${_d[0]}`] !== undefined
-            ? ws[`${String.fromCharCode(i)}${_d[0]}`].v
-            : "_Empty"] = ws[`${String.fromCharCode(i)}${j}`] !== undefined
-            ? ws[`${String.fromCharCode(i)}${j}`].v
-            : "_Empty";
-          }
-        array.push(obj)
-        id++;
 
 
-        }
-        console.log(array)
-
-        
-    
-     result.push({
-       name : sheetName,
-       array, 
-       head
-
-     })
-
-   
-
-        if (result.length === wb.SheetNames.length) {
-          resolve();
-        }
-      });
-    })
-      .then(() => {
-        mainWindow.webContents.send("employee:readFile", result);
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
-  }
-});
 
 function ReturnAllEmployee() {
   const employees = [];
@@ -216,5 +240,53 @@ function ReturnAllEmployee() {
       }
     });
   });
+}
+
+
+function generateCSV  ()  {
+  return new Promise((resolve, reject)=>{
+    ReturnAllEmployee().then(employees=>{
+
+      converter.json2csv(employees, (err, csv) => {
+        if (err) {
+            throw err;
+        }
+    
+        // print CSV string
+        console.log(csv);
+        
+    
+        dialog.showOpenDialog(mainWindow, {
+          properties: ['openFile', 'openDirectory' , 'promptToCreate' , 'showHiddenFiles']
+        }).then(result => {
+         
+          if(!result.canceled){
+            const d = getCurrentDateTime(new Date().getTime()).split('T')[0];
+            const path = `${result.filePaths}/save-${d}.csv`
+            
+    
+            // write CSV to a file
+            fs.writeFile(path, csv, (err)=>{
+              if(err) reject(err)
+              console.log(err)
+
+              resolve()
+    
+             
+    
+            });
+          }
+         
+        }).catch(err => {
+          reject(err)
+        })
+        
+    });
+    }).catch(err=>{
+    reject(err)
+    })
+  })
+
+
 }
 module.exports = Employee;

@@ -33,7 +33,7 @@ export default class StaticTable extends Component {
         selectedAll : false,
         rowsSelected : []
       }, () => {
-        this.props.sendData({rowsSelected : [],title : this.props.title });
+        this.props.sendData({rowsSelected : [],title : this.props.title , choose : this.state.choose });
       })
       return;
     }
@@ -43,7 +43,7 @@ export default class StaticTable extends Component {
       selectedAll : true,
       rowsSelected 
     },  () => {
-      this.props.sendData({rowsSelected,title : this.props.title });
+      this.props.sendData({rowsSelected,title : this.props.title , choose : this.state.choose });
     })
 
 
@@ -67,7 +67,7 @@ export default class StaticTable extends Component {
 
     if (rowsSelected.length === 0) this.setState({ selectedAll: false });
     this.setState({ rowsSelected }, () => {
-      this.props.sendData({rowsSelected,title : this.props.title });
+      this.props.sendData({rowsSelected,title : this.props.title, choose :  this.state.choose});
     });
   }
 
@@ -99,9 +99,12 @@ export default class StaticTable extends Component {
   
       selectValue[key] = title;
   
-      this.setState({ choose, selectValue });
+      this.setState({ choose, selectValue } , ()=>{
+        this.props.sendData({rowsSelected : this.state.rowsSelected , title : this.props.title, choose });
+      });
+      console.log(choose)
   
-      console.log(choose);
+      
     }
   
   };

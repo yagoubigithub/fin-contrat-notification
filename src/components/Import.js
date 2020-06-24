@@ -7,13 +7,18 @@ import { Button } from '@material-ui/core';
 
 export default class Import extends Component {
     
-    componentDidMount(){
-        
+    import = () =>{
+
+        if(Object.keys(this.state).length !== 0 ){
+            Object.keys(this.state).map(key=>{
+                this.props.ajouterMultiEmployee(this.state[key])
+            })
+        }
     }
     getData = (data) =>{
-        console.log( data )
+        
         const myState = {...this.state}
-        myState[data.title] = data.rowsSelected;
+        myState[data.title] = {rowsSelected   : data.rowsSelected, choose : data.choose};
 
         this.setState({...myState},()=> console.log(this.state))
 
@@ -38,7 +43,7 @@ export default class Import extends Component {
                 
             </Tabs>
 
-            <Button>Import</Button>
+            <Button onClick={this.import}>Import</Button>
             </div>
           
         )

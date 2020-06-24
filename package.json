@@ -26,6 +26,7 @@
     "electron-alert": "^0.1.5",
     "electron-is-dev": "^1.1.0",
     "html2canvas": "^1.0.0-rc.5",
+    "json-2-csv": "^3.7.5",
     "jspdf": "^1.5.3",
     "node-xlsx": "^0.15.0",
     "react": "^16.12.0",
