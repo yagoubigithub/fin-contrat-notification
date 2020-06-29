@@ -231,7 +231,7 @@ export const undoDeleteEmployee = (id) =>{
         type : "STOP_LOADING_EMPLOYEE"
     });
    
-    if(data){
+    if(Array.isArray(data)){
       dispatch({
           type : "READ_FILE_EMPLOYEE",
           payload : data

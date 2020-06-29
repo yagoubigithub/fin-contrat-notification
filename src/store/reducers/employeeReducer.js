@@ -76,7 +76,7 @@ const employeeReducer = (state = initStat, action) =>{
             case 'READ_FILE_EMPLOYEE' :
                 return {
                     ...state,
-                    myFile : action.payload
+                    employees : action.payload
                 }
          case 'REMOVE_MY_FILE':
              return {

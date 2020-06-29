@@ -159,7 +159,7 @@ class Employee extends Component {
   }
 
   handleFileInputChange=(e)=>{
-    this.handleOpenCloseImportDialog()
+  //  this.handleOpenCloseImportDialog()
     const file  = e.target.files[0];
     const path  = file.path;
     e.target.value = ""
@@ -202,7 +202,7 @@ class Employee extends Component {
           <button className="btn btn-nav" onClick={this._export}>Export</button>
 
           <button className="btn btn-nav" onClick={this.import}>Import</button>
-          <input type="file" id="file" accept=".xlsx,.xls" id="file" hidden onChange={this.handleFileInputChange} />
+          <input type="file" id="file" accept=".csv" id="file" hidden onChange={this.handleFileInputChange} />
         </div>
 
         <Dialog  open={this.state.importDialog}
@@ -244,7 +244,7 @@ class Employee extends Component {
         </Dialog>
         
 
-     {    <Tabs>
+     {    <Tabs style={{height : 700}}>
           <Tab
             index={0}
             group="employee"

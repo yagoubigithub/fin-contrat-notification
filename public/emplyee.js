@@ -113,6 +113,77 @@ function Employee() {
   });
 
   ipcMain.on("employee:readFile", (event, value) => {
+
+    if(value.path){
+
+      fs.readFile(value.path, 'utf-8', (err, data) => {
+        if(err){
+          mainWindow.webContents.send("employee:readFile", "An error ocurred reading the file :" + err.message);
+            
+            return;
+        }
+
+        // Change how to handle the file content
+        converter.csv2json(data,(err,array)=>{
+
+          /*
+ nom BLOB ,
+        prenom BLOB ,
+        adresse BLOB ,
+        telephone BLOB ,
+        email BLOB ,
+        date_debut BLOB,
+        date_fin BLOB,
+        status BLOB
+          */
+          new Promise((resolve, reject)=>{
+           
+            console.log(array[0])
+            if(array[0].nom !== undefined && array[0].prenom !== undefined && array[0].adresse !== undefined && array[0].telephone !== undefined && array[0].email !== undefined && array[0].date_debut !== undefined && array[0].date_fin !== undefined){
+             
+              deleteEmployee().then(()=>{
+                let sql = `INSERT INTO employee(nom ,  prenom , adresse, telephone, email , date_debut , date_fin ,  status ) VALUES   `;
+              let count = 0;
+                array.forEach((e) => {
+            
+                  const placeholder = ` ('${e.nom}', '${e.prenom}' , '${e.adresse}' , '${e.telephone}' , '${e.email}' , '${e.date_debut}' , '${e.date_fin}' ,'undo') ,`;
+                  sql = sql + placeholder;
+                  count++;
+      
+                  if(count === array.length) {resolve(sql)}
+                })
+              }).catch(err=>{
+                mainWindow.webContents.send("employee:readFile", err);
+              })
+            }else{
+              mainWindow.webContents.send("employee:readFile", "error");
+            }
+            
+          }).then((sql)=>{
+            console.log(sql)
+            sql = sql.slice(0, sql.lastIndexOf(",") - 1);
+            db.run(sql , (err)=>{
+            
+              if(err)  mainWindow.webContents.send("employee:readFile", err);
+              ReturnAllEmployee()
+              .then((employees) => {
+                mainWindow.webContents.send("employee:readFile", employees);
+              })
+              .catch((err) => {
+                mainWindow.webContents.send("employee:readFile", err);
+              });
+           
+            })
+
+          })
+
+
+
+        })
+    });
+    }
+
+   /*
     const result = [];
     if (value.path) {
       const wb = xlsx.readFile(value.path, {
@@ -201,6 +272,7 @@ function Employee() {
           console.log("error", err);
         });
     }
+    */
   });
   
   
@@ -217,6 +289,7 @@ function Employee() {
   });
   
 }
+
 
 
 
@@ -289,4 +362,34 @@ function generateCSV  ()  {
 
 
 }
+
+function deleteEmployee(){
+
+  return new Promise((resolve, reject)=>{
+    db.run(`DROP TABLE employee`  , (err=>{
+      if(err) reject(err)
+
+
+      db.run(`CREATE TABLE IF NOT EXISTS employee (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nom BLOB ,
+        prenom BLOB ,
+        adresse BLOB ,
+        telephone BLOB ,
+        email BLOB ,
+        date_debut BLOB,
+        date_fin BLOB,
+        status BLOB
+    )`,(err)=>{
+      if(err) reject(err)
+
+      resolve()
+    });
+
+
+    }))
+  })
+  
+}
+
 module.exports = Employee;
