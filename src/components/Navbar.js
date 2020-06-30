@@ -86,10 +86,10 @@ class Navbar extends Component {
           <p className="copyRight" onClick={this.openCloseCopyRight}>By Atech-info</p>
           <Dialog open={this.state.copyRight} onClose={this.openCloseCopyRight} style={{padding : 15}}>
          
-          <img src="/logo250-atech.png" />
+          <img src="/logo250-atech.png" width="300" height="300" />
           <p style={{margin : 5}}>Email : contact@atech-info.com</p>
           <p style={{margin : 5}}>Website : https://atech-info.com/</p>
-          <p style={{margin : 5}}>Télephone : 99999</p>
+          
 
           <DialogActions
           >

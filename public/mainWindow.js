@@ -12,9 +12,9 @@ let mainWindow = new BrowserWindow({
       nativeWindowOpen: true
     },
    width : 900,
-   height : 700,
+   height : 730,
    // resizable :false,
-  //  frame : false,
+    frame : false,
     icon: `${path.join(__dirname, "./assets/logo.png")}`
   });
   mainWindow.loadURL(
