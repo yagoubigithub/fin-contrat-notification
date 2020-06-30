@@ -30,14 +30,20 @@ const authReducer = (state = initStat, action) =>{
             return {
                 ...state,
                 error :null,
-                user : action.payload
+                user : {
+                    username : action.payload.rows[0].username,
+                    password : action.payload.rows[0].password
+                },
+                isDev : action.payload.isDev,
+                direname : action.payload.direname
             }
         case 'GET_USER' : 
 
         return {
             ...state,
             error : null,
-            user : action.payload
+            user : action.payload.rows[0],
+            direname : action.payload.direname
         }
         default :
         return {

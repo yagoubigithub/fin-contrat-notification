@@ -11,7 +11,16 @@
       "icon": "public/assets/logo.png"
     },
     "productName": "Expiration du contrat",
-    "copyright": "yagoubi abdelkader"
+    "copyright": "yagoubi abdelkader",
+    "extraResources": [
+      {
+        "from": "./public/audio",
+        "to": "",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
   },
   "main": "public/electron.js",
   "homepage": "./",

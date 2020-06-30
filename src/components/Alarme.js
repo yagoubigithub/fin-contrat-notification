@@ -58,7 +58,8 @@ class Alarme extends Component {
       //play
       const embd = document.getElementById("audio");
       const source = this.state.son;
-      embd.src = source;
+      
+      embd.src = !this.props.isDev ? this.props.direname + "/" +  source : source;
       embd.play();
     }
 
@@ -135,6 +136,8 @@ const mapStateToProps = (state) => {
   return {
     loading: state.alarme.loading,
     alarme: state.alarme.alarme,
+    direname : state.auth.direname,
+    isDev : state.auth.isDev
   };
 };
 
@@ -142,6 +145,7 @@ const mapActionToProps = (dispatch) => {
   return {
     modifierAlarme: (data) => dispatch(modifierAlarme(data)),
     getAlarme: () => dispatch(getAlarme()),
+
   };
 };
 

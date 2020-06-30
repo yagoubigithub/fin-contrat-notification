@@ -14,13 +14,10 @@ export const connexion = (data) =>{
         type : "STOP_LOADING_AUTH"
     });
    
-    if(data[0] !== undefined){
+    if(data.rows[0] !== undefined){
       dispatch({
         type : "AUTH_SUCCESS",
-        payload : {
-          username : data[0].username,
-          password :  data[0].password
-        }
+        payload : data
     });
     }else{
       dispatch({
@@ -52,10 +49,10 @@ export const getUser = () =>{
   });dispatch({
     type : "STOP_LOADING_AUTH"
 });
-  if(Array.isArray(data)){
+  if(Array.isArray(data.rows)){
     dispatch({
         type : "GET_USER",
-        payload : data[0]
+        payload : data
     });
   }else{
     dispatch({

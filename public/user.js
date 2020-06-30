@@ -1,7 +1,7 @@
 const { ipcMain } = require("electron");
 const db = require("./db");
 const mainWindow = require("./mainWindow");
-
+const isDev = require("electron-is-dev");
 const methode = User.prototype;
 
 function User() {
@@ -72,7 +72,7 @@ function User() {
         `SELECT * FROM user WHERE username='${value.username}' AND password='${value.password}' AND id=1`,
         function (err, rows) {
           if (err) mainWindow.webContents.send("user", err);
-          mainWindow.webContents.send("user", rows);
+          mainWindow.webContents.send("user", {rows , direname : __dirname, isDev});
         }
       );
     } else {
@@ -80,7 +80,7 @@ function User() {
         `SELECT * FROM user WHERE  id=1`,
         function (err, rows) {
           if (err) mainWindow.webContents.send("user", err);
-          mainWindow.webContents.send("user", rows);
+          mainWindow.webContents.send("user", {rows , direname : __dirname, isDev});
         }
       );
     }
