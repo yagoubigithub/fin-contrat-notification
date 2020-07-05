@@ -17,30 +17,9 @@ function User() {
        
     )`);
 
-  db.run(`CREATE TABLE IF NOT EXISTS alarte (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      repeter BLOB ,
-      son BLOB 
-     
-  )`);
+ 
  
   
-  db.get(`SELECT * FROM alarte WHERE  id=1`, function (err, result) {
-    if(result === undefined ){
-
-     
-        db.run(
-          `INSERT  INTO alarte( repeter  , son  ) VALUES ('jours','railroad_crossing_bell-Brylon_Terry-1551570865.mp3')  
-              `,
-          function (err) {
-            db.all(`SELECT * FROM alarte`, function (err, rows) {
-              console.log(rows);
-            });
-          }
-        );
-      
-    }
-  });
   
 
   db.all(`SELECT * FROM user`, function (err, rows) {

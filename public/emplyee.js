@@ -269,8 +269,8 @@ function Employee() {
   
   ipcMain.on("employee:export", (event, value) => {
   
-    generateCSV().then(() => {
-      mainWindow.webContents.send("employee:export", {export : true});
+    generateCSV().then(({_export}) => {
+      mainWindow.webContents.send("employee:export", {export : _export});
     })
     .catch((err) => {
       mainWindow.webContents.send("employee:export", err);
@@ -332,15 +332,17 @@ function generateCSV  ()  {
             // write CSV to a file
             fs.writeFile(path, csv, (err)=>{
               if(err) reject(err)
-              console.log(err)
+              
 
-              resolve()
+              resolve({_export : false})
     
              
     
             });
           }
-         
+         else{
+          resolve({_export : false})
+         }
         }).catch(err => {
           reject(err)
         })
