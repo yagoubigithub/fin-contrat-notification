@@ -9,93 +9,34 @@ const notificationWindow = require('./notificationWindow')
 
 function Task(){
      // Task
-     let time = 1 * 60 * 60 * 1000;
-     let heurInterval;
-     setTimeout(()=>{
- db.get('SELECT * FROM alarte WHERE  id=1', (err, result)=>{
-     
-     if(result !== undefined){
-       const repeter = result.repeter;
-
-
-         switch (repeter) {
-             case "heurs" :
-                
-                
-              heurInterval =    setInterval(()=>{
-                    //console.log("task")
-                     const today = getCurrentDateTime(new Date().getTime()).split('T')[0];
+     const today = getCurrentDateTime(new Date().getTime()).split('T')[0];
             
-                     db.all(`SELECT *  FROM employee     ORDER BY id DESC `, function (err, rows) {
-                         
-                         if(rows !== undefined){
-                             rows.forEach(employee => {
-                                 const date_fin = employee.date_fin;
-            
-                                 if(compare(date_fin,today)){
-                                     console.log("employee ", employee.nom)
-                                     notificationWindow.show()
-                              
-                                     notificationWindow.webContents.send("employee:alarte", {alarme : result , employee})
-                             
-                                 }
-                                 
-                             });
-                         }
-                         
-                        
-                     })
-            
-                 },time)
-             
-
-             break;
-
-
-
-             case 'jours' :
-
-             clearInterval(heurInterval)
-             setTimeout(()=>{
-
-
-                const today = getCurrentDateTime(new Date().getTime()).split('T')[0];
-            
-                db.all(`SELECT *  FROM employee     ORDER BY id DESC `, function (err, rows) {
-                    
-                    if(rows !== undefined){
-                        rows.forEach(employee => {
-                            const date_fin = employee.date_fin;
-       
-                            if(compare(date_fin,today)){
-                                console.log("employee", employee.nom)
-                                notificationWindow.show()
-                              
-                                    notificationWindow.webContents.send("employee:alarte", {alarme : result , employee})
-                            
-
-
-                            }
-                            
-                        });
-                    }
-                    
-                   
-                })
-       
-             },5000)
-
-             break;
+   
+   
+     notificationWindow.webContents.on("dom-ready",(event)=>{
+           db.all(`SELECT *  FROM employee     ORDER BY id DESC `, function (err, rows) {
          
-             default:
-                 break;
-         }   
-     }
+         if(rows !== undefined){
+             rows.forEach(employee => {
+                 const date_fin = employee.date_fin;
+
+               
+                 if(compare(date_fin,today)){
+     
+                     notificationWindow.show()
+                   
+                         notificationWindow.webContents.send("employee:alarte", { employee})
+                 
+
+
+                 }
+                 
+             });
+         }
+         
         
-
      })
-
-     },2000)
+     })
     
      ipcMain.on('close-notification', (event,value)=>{
 
@@ -103,6 +44,18 @@ function Task(){
      })
      ipcMain.on("closeWindow",  (event,value)=>{
         mainWindow.hide()
+     })
+     ipcMain.on("minimizeWindow",  (event,value)=>{
+        mainWindow.minimize()
+     })
+     ipcMain.on("changeScreen",  (event,value)=>{
+        if(value.isFullScreen){
+            mainWindow.unmaximize()
+        }else{
+            mainWindow.maximize()
+            
+           
+        }
      })
 
     

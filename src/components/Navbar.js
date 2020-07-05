@@ -59,17 +59,7 @@ class Navbar extends Component {
             <span>Liste des Employées</span>
           </NavLink>
 
-          <NavLink
-            activeClassName="nav-active"
-            to="/alarme"
-            className="nav-link"
-          >
-            <span className="nav-link-icon">
-              <NotificationsIcon />
-            </span>
-
-            <span>Alarme</span>
-          </NavLink>
+        
 
           <NavLink
             activeClassName="nav-active"
@@ -83,7 +73,7 @@ class Navbar extends Component {
             <span>User</span>
           </NavLink>
 
-          <p className="copyRight" onClick={this.openCloseCopyRight}>By Atech-info</p>
+      { /*   <p className="copyRight" onClick={this.openCloseCopyRight}>By Atech-info</p>
           <Dialog open={this.state.copyRight} onClose={this.openCloseCopyRight} style={{padding : 15}}>
          
           <img src="/logo250-atech.png" width="300" height="300" />
@@ -97,7 +87,7 @@ class Navbar extends Component {
           </DialogActions>
 
           </Dialog>
-         
+        */ }
         </div>
         
       </nav>

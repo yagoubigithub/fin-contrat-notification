@@ -8,7 +8,7 @@ function Alarme() {
  
   
 
- 
+  //db.run(`DROP TABLE alarte` )
   //get alarme
   ipcMain.on("alarme", (event, value) => {
     db.all(

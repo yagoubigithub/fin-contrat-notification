@@ -13,7 +13,7 @@
         }
 
         body {
-            background-color: red;
+            background-color: crimson;
             color: white;
             font-family: Arial, Helvetica, sans-serif;
         }
@@ -85,7 +85,7 @@
 
         ipcRenderer.on("employee:alarte", function (event, res) {
             console.log(res)
-            foo.setSource(res.alarme.son)
+            foo.setSource("son.mp3")
            
             foo.start();
             const { nom, prenom, adresse, telephone, email, date_debut, date_fin } = { ...res.employee }

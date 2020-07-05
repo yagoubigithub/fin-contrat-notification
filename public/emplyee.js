@@ -126,16 +126,7 @@ function Employee() {
         // Change how to handle the file content
         converter.csv2json(data,(err,array)=>{
 
-          /*
- nom BLOB ,
-        prenom BLOB ,
-        adresse BLOB ,
-        telephone BLOB ,
-        email BLOB ,
-        date_debut BLOB,
-        date_fin BLOB,
-        status BLOB
-          */
+      
           new Promise((resolve, reject)=>{
            
             console.log(array[0])
