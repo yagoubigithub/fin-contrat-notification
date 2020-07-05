@@ -1,5 +1,6 @@
 const isDev = require("electron-is-dev");
 const path =  require('path')
+const fs = require('fs');
 
 const { BrowserWindow, app } = require("electron");
 
@@ -23,7 +24,13 @@ let mainWindow = new BrowserWindow({
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
  
+  if (!fs.existsSync(`start.txt`)) {
+    mainWindow.show()
+    try { fs.writeFileSync('start.txt', new Date().getTime(), 'utf-8'); }
+  catch(e) { console.log('Failed to save the file !'); }
+  } 
 
+  
 
   mainWindow.on('close', ()=>{
     app.quit()
