@@ -1,7 +1,7 @@
 const isDev = require("electron-is-dev");
 const path =  require('path')
 
-const { BrowserWindow } = require("electron");
+const { BrowserWindow, app } = require("electron");
 
 
 
@@ -14,7 +14,7 @@ let mainWindow = new BrowserWindow({
    width : 900,
    height : 730,
    //resizable :false,
-    frame : false,
+    //frame : false,
     icon: `${path.join(__dirname, "./assets/logo.png")}`
   });
   mainWindow.loadURL(
@@ -25,5 +25,8 @@ let mainWindow = new BrowserWindow({
  
 
 
+  mainWindow.on('close', ()=>{
+    app.quit()
+  })
 module.exports = mainWindow;
 

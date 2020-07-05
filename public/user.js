@@ -67,11 +67,12 @@ function User() {
  
   //get user
   ipcMain.on("user", (event, value) => {
-    if(value.username){
+    if(value.username !== undefined){
       db.all(
         `SELECT * FROM user WHERE username='${value.username}' AND password='${value.password}' AND id=1`,
         function (err, rows) {
           if (err) mainWindow.webContents.send("user", err);
+         
           mainWindow.webContents.send("user", {rows , direname : __dirname, isDev});
         }
       );
