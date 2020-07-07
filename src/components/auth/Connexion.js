@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {connexion} from '../../store/actions/authAction'
 
 
+import logo from '../../logo'
 
 import LoadingComponent from "../../utils/loadingComponent";
 //Mui
@@ -40,6 +41,7 @@ import TaskBar from '../TaskBar';
             <Dialog fullScreen open={true}>
             <TaskBar/>
      <div> 
+     <img src={logo} width="300" height="300" style={{display : "block",margin : "auto", marginTop : 50}}/>
           
           <div className="container-auth">
            <form onSubmit={this.handleSubmit} className="form-auth">

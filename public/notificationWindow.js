@@ -14,7 +14,7 @@ let notificationWindow = new BrowserWindow({
     transparent : true,
     alwaysOnTop : true,
     skipTaskbar: true,
-    resizable :false,
+   resizable :false,
     height : 500,
    width : 400,
    frame : false,

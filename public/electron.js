@@ -22,6 +22,7 @@ if (!gotTheLock) {
   app.on('second-instance', (event, commandLine, workingDirectory) => {
     // Someone tried to run a second instance, we should focus our window.
     if (mainWindow) {
+      mainWindow.show()
       if (mainWindow.isMinimized()) mainWindow.restore()
       mainWindow.focus()
     }
@@ -78,7 +79,7 @@ if (!gotTheLock) {
     })
   
   
-    
+    tray.setToolTip('Expiration du contrat')
     
     tray.on('click', ()=>{
       

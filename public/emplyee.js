@@ -1,6 +1,7 @@
 const { ipcMain ,dialog } = require("electron");
 const db = require("./db");
 const mainWindow = require("./mainWindow");
+const notificationWindow = require("./notificationWindow");
 const xlsx = require("xlsx");
 const converter = require('json-2-csv');
 
@@ -57,6 +58,32 @@ function Employee() {
           `,
       function (err) {
         if (err) mainWindow.webContents.send("employee:ajouter", err);
+        setTimeout(()=>{
+         
+           
+          db.all(`SELECT *  FROM employee WHERE status="undo" ORDER BY id DESC `, function (err, rows) {
+            const today = getCurrentDateTime(new Date().getTime()).split('T')[0];
+            if(rows !== undefined){
+                rows.forEach(employee => {
+                    const date_fin = employee.date_fin;
+   
+                  
+                    if(compare(date_fin,today)){
+        
+                        notificationWindow.show()
+                      
+                            notificationWindow.webContents.send("employee:alarte", { employee})
+                    
+   
+   
+                    }
+                    
+                });
+            }
+            
+           
+        })
+        },2000)
 
         ReturnAllEmployee()
           .then((employees) => {
@@ -79,6 +106,32 @@ function Employee() {
         function (err) {
           if (err) mainWindow.webContents.send("employee:delete", err);
 
+          setTimeout(()=>{
+            
+           
+            db.all(`SELECT *  FROM employee WHERE status="undo" ORDER BY id DESC `, function (err, rows) {
+           const today = getCurrentDateTime(new Date().getTime()).split('T')[0];
+              if(rows !== undefined){
+                  rows.forEach(employee => {
+                      const date_fin = employee.date_fin;
+     
+                    
+                      if(compare(date_fin,today)){
+          
+                          notificationWindow.show()
+                        
+                              notificationWindow.webContents.send("employee:alarte", { employee})
+                      
+     
+     
+                      }
+                      
+                  });
+              }
+              
+             
+          })
+          },2000)
           ReturnAllEmployee()
             .then((employees) => {
               mainWindow.webContents.send("employee:delete", employees);
@@ -100,6 +153,33 @@ function Employee() {
         function (err) {
           if (err) mainWindow.webContents.send("employee:modifier", err);
 
+          setTimeout(()=>{
+           
+           
+            db.all(`SELECT *  FROM employee WHERE status="undo" ORDER BY id DESC `, function (err, rows) {
+
+              const today = getCurrentDateTime(new Date().getTime()).split('T')[0];
+              if(rows !== undefined){
+                  rows.forEach(employee => {
+                      const date_fin = employee.date_fin;
+     
+                    
+                      if(compare(date_fin,today)){
+          
+                          notificationWindow.show()
+                        
+                              notificationWindow.webContents.send("employee:alarte", { employee})
+                      
+     
+     
+                      }
+                      
+                  });
+              }
+              
+             
+          })
+          },2000)
           ReturnAllEmployee()
             .then((employees) => {
               mainWindow.webContents.send("employee:modifier", employees);
@@ -156,6 +236,32 @@ function Employee() {
             db.run(sql , (err)=>{
             
               if(err)  mainWindow.webContents.send("employee:readFile", err);
+              setTimeout(()=>{
+               
+           
+                db.all(`SELECT *  FROM employee WHERE status="undo" ORDER BY id DESC `, function (err, rows) {
+                const today = getCurrentDateTime(new Date().getTime()).split('T')[0];
+                  if(rows !== undefined){
+                      rows.forEach(employee => {
+                          const date_fin = employee.date_fin;
+         
+                        
+                          if(compare(date_fin,today)){
+              
+                              notificationWindow.show()
+                            
+                                  notificationWindow.webContents.send("employee:alarte", { employee})
+                          
+         
+         
+                          }
+                          
+                      });
+                  }
+                  
+                 
+              })
+              },2000)
               ReturnAllEmployee()
               .then((employees) => {
                 mainWindow.webContents.send("employee:readFile", employees);
@@ -270,6 +376,32 @@ function Employee() {
   ipcMain.on("employee:export", (event, value) => {
   
     generateCSV().then(({_export}) => {
+      setTimeout(()=>{
+       
+           
+        db.all(`SELECT *  FROM employee WHERE status="undo" ORDER BY id DESC `, function (err, rows) {
+        const today = getCurrentDateTime(new Date().getTime()).split('T')[0];
+          if(rows !== undefined){
+              rows.forEach(employee => {
+                  const date_fin = employee.date_fin;
+ 
+                
+                  if(compare(date_fin,today)){
+      
+                      notificationWindow.show()
+                    
+                          notificationWindow.webContents.send("employee:alarte", { employee})
+                  
+ 
+ 
+                  }
+                  
+              });
+          }
+          
+         
+      })
+      },2000)
       mainWindow.webContents.send("employee:export", {export : _export});
     })
     .catch((err) => {
@@ -384,5 +516,10 @@ function deleteEmployee(){
   })
   
 }
+function compare(date1, date2){
+  return date1 === date2
+}
+
+
 
 module.exports = Employee;

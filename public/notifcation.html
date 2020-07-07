@@ -60,8 +60,7 @@
     <nav>
 
         <button id="close-btn">
-
-            <img src="assets/baseline_close_white_18dp.png" />
+            <img  id="closeImg" src="assets/baseline_cancel_white_24dp.png" />
         </button>
     </nav>
 
@@ -84,9 +83,10 @@
         const foo = new Sound( 100, true);
 
         ipcRenderer.on("employee:alarte", function (event, res) {
-            console.log(res)
-            foo.setSource("son.mp3")
+            console.log(res.isDev ? "son.mp3"  : res.direname + "/" + "son.mp3")
            
+            foo.setSource("son.mp3");
+        
             foo.start();
             const { nom, prenom, adresse, telephone, email, date_debut, date_fin } = { ...res.employee }
             let list = document.getElementById("list")

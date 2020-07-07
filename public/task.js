@@ -3,6 +3,8 @@ const methode = Task.prototype;
 const {ipcMain} = require("electron")
 const db = require('./db')
 const mainWindow = require('./mainWindow');
+const isDev = require("electron-is-dev");
+const path = require('path');
 
 const notificationWindow = require('./notificationWindow')
 
@@ -10,11 +12,13 @@ const notificationWindow = require('./notificationWindow')
 function Task(){
      // Task
      const today = getCurrentDateTime(new Date().getTime()).split('T')[0];
+     const direname = path.resolve();
             
+
    
    
-     notificationWindow.webContents.on("dom-ready",(event)=>{
-           db.all(`SELECT *  FROM employee     ORDER BY id DESC `, function (err, rows) {
+     notificationWindow.webContents.once("dom-ready",(event)=>{
+           db.all(`SELECT *  FROM employee WHERE status="undo" ORDER BY id DESC `, function (err, rows) {
          
          if(rows !== undefined){
              rows.forEach(employee => {
@@ -25,7 +29,7 @@ function Task(){
      
                      notificationWindow.show()
                    
-                         notificationWindow.webContents.send("employee:alarte", { employee})
+                         notificationWindow.webContents.send("employee:alarte", { employee , direname,isDev})
                  
 
 
