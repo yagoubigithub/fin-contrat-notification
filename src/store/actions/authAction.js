@@ -8,6 +8,7 @@ export const connexion = (data) =>{
         type : "LOADING_AUTH"
     })
     ipcRenderer.send("user", {...data});
+  
     
     ipcRenderer.once('user', function (event,data) {
       dispatch({
@@ -33,6 +34,28 @@ export const connexion = (data) =>{
     }
 }
 
+
+export const _connect = ()=>{
+  return (dispatch , getState)=>{
+    dispatch({
+      type : "LOADING_AUTH"
+  })
+
+  ipcRenderer.send("connect");
+  
+    
+  ipcRenderer.once('connect', function (event,data) {
+
+    if(data.isConnect){
+      dispatch({
+        type : "STOP_LOADING_AUTH"
+    });
+    }
+
+  })
+
+  }
+}
 
 export const getUser = () =>{
   return (dispatch ,getState)=>{

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 //redux
 import {connect} from "react-redux";
-import {connexion} from '../../store/actions/authAction'
+import {connexion,_connect} from '../../store/actions/authAction'
 
 
 import logo from '../../logo'
@@ -18,6 +18,9 @@ import TaskBar from '../TaskBar';
     state= {
         username : "",
         password :  ""
+    }
+    componentWillMount = ()=>{
+        //this.props.connect()
     }
     
      componentWillReceiveProps(nextProps){
@@ -66,7 +69,8 @@ import TaskBar from '../TaskBar';
 }
 const mapActionToProps = dispatch =>{
     return {
-        connexion  : (data) => dispatch(connexion(data))
+        connexion  : (data) => dispatch(connexion(data)),
+        connect : ()=>dispatch(_connect())
     }
 }
 const mapStateToProps = state =>{

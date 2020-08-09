@@ -54,8 +54,8 @@ function Employee() {
   ipcMain.on("employee:ajouter", (event, value) => {
     db.run(
       `
-          INSERT  INTO employee( nom  , prenom , adresse , telephone , email, date_debut, date_fin , status  ) VALUES ('${value.nom}','${value.prenom}' , '${value.adresse}' , '${value.telephone}' ,'${value.email}'  ,'${value.date_debut}','${value.date_fin}' , 'undo')  
-          `,
+          INSERT  INTO employee( nom  , prenom , adresse , telephone , email, date_debut, date_fin , status  ) VALUES (? ,? , ? , ? ,?  ,?,? , ?)  
+          `,[value.nom,value.prenom,value.adresse,value.telephone,value.email,value.date_debut,value.date_fin ,'undo'],
       function (err) {
         if (err) mainWindow.webContents.send("employee:ajouter", err);
         setTimeout(()=>{
@@ -149,7 +149,9 @@ function Employee() {
   ipcMain.on("employee:modifier", (event, value) => {
     if (value.id !== undefined) {
       db.run(
-        `UPDATE employee  SET nom='${value.nom}', prenom='${value.prenom}',adresse='${value.adresse}',telephone='${value.telephone}',email='${value.email}', date_debut='${value.date_debut}',date_fin='${value.date_fin}',  status='${value.status}' WHERE id = ${value.id};`,
+        `UPDATE employee  SET nom=? , prenom=?,adresse=?,telephone=?,email=?, date_debut='?,date_fin=?,  status=? WHERE id = ?;`,[
+          value.nom,value.prenom,value.adresse,value.telephone,value.email,value.date_debut,value.date_fin,value.status,value.id
+        ],
         function (err) {
           if (err) mainWindow.webContents.send("employee:modifier", err);
 

@@ -29,13 +29,16 @@ import User from "./components/User";
 
 
 class App extends Component {
+ 
+ 
   render() {
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      
+    
       <Router>
       <TaskBar></TaskBar>
         <div className="container">
+        
           {this.props.auth.user !== undefined ? (
             <Navbar />
           ) : (

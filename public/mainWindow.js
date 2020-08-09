@@ -3,7 +3,9 @@ const path =  require('path')
 const fs = require('fs');
 
 const { BrowserWindow, app } = require("electron");
+const Alert = require("electron-alert");
 
+let alert = new Alert();
 
 
 let mainWindow = new BrowserWindow({
@@ -23,11 +25,29 @@ let mainWindow = new BrowserWindow({
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
+  mainWindow.on('closed', function() {
+    mainWindow = null;
+});
+
+app.on('window-all-closed', function() {
+  if(process.platform != 'darwin')
+      app.quit();
+})
+
  
-  if (!fs.existsSync(`start.txt`)) {
+  if (!fs.existsSync(isDev
+  ? "start.txt"
+  : path.join(__dirname, "../../start.txt")
+  
+  )) {
     mainWindow.show()
-    try { fs.writeFileSync('start.txt', new Date().getTime(), 'utf-8'); }
+    try { fs.writeFileSync(isDev
+      ? "start.txt"
+      : path.join(__dirname, "../../start.txt")
+      , new Date().getTime(), 'utf-8'); }
   catch(e) { console.log('Failed to save the file !'); }
+  }else{
+    mainWindow.hide()
   } 
 
   

@@ -3,18 +3,23 @@ const isDev = require("electron-is-dev");
 require('v8-compile-cache');
 const AutoLaunch = require('auto-launch');
 
+const fs = require('fs')
 
 
 
 const path = require('path')
 
-const { app , Tray} = electron;
+const { app , Tray , ipcMain} = electron;
 
 let mainWindow ,  tray;
 
 
 
+
+
+
 const gotTheLock = app.requestSingleInstanceLock()
+
 
 if (!gotTheLock) {
   app.quit()
@@ -28,8 +33,33 @@ if (!gotTheLock) {
     }
   })
 
+  app.on('activate', ()=>{
+
+  })
   // Create mainWindow, load the rest of the app, etc...
   app.on("ready", () => {
+  
+    
+
+/*
+    if (!fs.existsSync(`auto.txt`)) {
+      
+      try { fs.writeFileSync('auto.txt', new Date().getTime(), 'utf-8'); }
+    catch(e) { console.log('Failed to save the file !'); }
+    }else{
+      try { fs.appendFileSync('auto.txt',`-${new Date().getTime()}` , 'utf-8'); }
+    catch(e) { console.log('Failed to save the file !'); }
+   const data =  fs.readFileSync('auto.txt').toString();
+   console.log(data)
+    } 
+
+    ipcMain.once('connect', (event, value)=>{
+      console.log(isConnect)
+      mainWindow.webContents.send("connect", {isConnect })
+
+      
+
+    })*/
  
     let autoLaunch = new AutoLaunch({
       name: 'Expiration du contrat',
@@ -46,9 +76,11 @@ if (!gotTheLock) {
       const DevTools = require('./devTools')
     const devTools = new DevTools(isDev);
   
-    const db = require("./db");
+    
   
   
+    
+
     const User = require('./user');
     const user = new User();
   
