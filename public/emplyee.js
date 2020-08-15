@@ -149,7 +149,7 @@ function Employee() {
   ipcMain.on("employee:modifier", (event, value) => {
     if (value.id !== undefined) {
       db.run(
-        `UPDATE employee  SET nom=? , prenom=?,adresse=?,telephone=?,email=?, date_debut='?,date_fin=?,  status=? WHERE id = ?;`,[
+        `UPDATE employee  SET nom=? , prenom=?,adresse=?,telephone=?,email=?, date_debut=?,date_fin=?,  status=? WHERE id = ?;`,[
           value.nom,value.prenom,value.adresse,value.telephone,value.email,value.date_debut,value.date_fin,value.status,value.id
         ],
         function (err) {

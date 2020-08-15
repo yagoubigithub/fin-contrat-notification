@@ -26,7 +26,18 @@ const authReducer = (state = initStat, action) =>{
                 ...state,
                 error : action.payload
             }
-        case "AUTH_SUCCESS" :
+
+            case 'ERROR_AUTH' :
+                return {
+                    ...state,
+                    error : action.payload
+                }
+            case 'ERROR_AUTH_KEY' :
+                return{
+                    ...state,
+                    error_key : action.payload
+                }
+                        case "AUTH_SUCCESS" :
             return {
                 ...state,
                 error :null,
@@ -37,6 +48,16 @@ const authReducer = (state = initStat, action) =>{
                 isDev : action.payload.isDev,
                 direname : action.payload.direname
             }
+            case 'ADD_KEY' :
+                return {
+                    ...state,
+                    key : action.payload
+                }
+            case 'GET_LICENCE' :
+                return{
+                    ...state,
+                    key : action.payload
+                }
         case 'GET_USER' : 
 
         return {

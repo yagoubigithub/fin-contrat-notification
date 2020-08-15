@@ -6,7 +6,7 @@ const methode = User.prototype;
 
 function User() {
  // db.run(`DROP TABLE user` )
- // db.run(`DROP TABLE alarte` )
+ db.run(`DROP TABLE licence` )
 
 
   db.run(`CREATE TABLE IF NOT EXISTS user (
@@ -16,7 +16,12 @@ function User() {
         
        
     )`);
-
+    db.run(`CREATE TABLE IF NOT EXISTS licence (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      key TEXT 
+      
+     
+  )`);
  
  
   
@@ -43,7 +48,44 @@ function User() {
   });
 
 
+  ipcMain.on("licence", (event, value) => {
+    db.all(
+      `SELECT * FROM licence WHERE  id=1`,
+      function (err, rows) {
+        if (err) mainWindow.webContents.send("licence", err);
+        console.log(err,rows)
+        if(rows.length > 0)
+        mainWindow.webContents.send("licence", {...rows[0]  });
+        else
+        mainWindow.webContents.send("licence", {error : "Enter Key"  });
+            }
+    );
  
+  });
+  //licence:ajouter
+  ipcMain.on("licence:ajouter", (event, value) => {
+    db.run(
+      "INSERT  INTO licence( `key`    ) VALUES (? ) ",[value.key],
+      function (err) {
+        if (err) mainWindow.webContents.send("licence:ajouter", err);
+     
+
+        console.log(err)
+        db.all(
+          `SELECT * FROM licence WHERE  id=1`,
+          function (err, rows) {
+            if (err) mainWindow.webContents.send("licence:ajouter", err);
+            if(rows !== undefined)
+            mainWindow.webContents.send("licence:ajouter", {...rows[0]  });
+            else
+            mainWindow.webContents.send("licence:ajouter", {key : null  });
+                }
+        );
+
+            }
+    );
+ 
+  });
   //get user
   ipcMain.on("user", (event, value) => {
     if(value.username !== undefined){
