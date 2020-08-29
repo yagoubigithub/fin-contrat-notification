@@ -199,9 +199,9 @@ class Employee extends Component {
             {this.state.delete_button_text}
           </button>
 
-          <button className="btn btn-nav" onClick={this._export}>Export</button>
+          <button className="btn btn-nav" onClick={this._export}>Exporter</button>
 
-          <button className="btn btn-nav" onClick={this.import}>Import</button>
+          <button className="btn btn-nav" onClick={this.import}>Importer</button>
           <input type="file" id="file" accept=".csv" id="file" hidden onChange={this.handleFileInputChange} />
         </div>
 

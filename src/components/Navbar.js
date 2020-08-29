@@ -70,7 +70,7 @@ class Navbar extends Component {
               <PersonIcon />
             </span>
 
-            <span>User</span>
+            <span>Utlisateur</span>
           </NavLink>
 
       { /*   <p className="copyRight" onClick={this.openCloseCopyRight}>By Atech-info</p>

@@ -2,7 +2,7 @@ const { ipcMain ,dialog } = require("electron");
 const db = require("./db");
 const mainWindow = require("./mainWindow");
 const notificationWindow = require("./notificationWindow");
-const xlsx = require("xlsx");
+
 const converter = require('json-2-csv');
 
 const fs = require('fs')

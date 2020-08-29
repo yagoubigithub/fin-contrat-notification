@@ -157,7 +157,7 @@ export const testKey = (key) =>{
   const data = { key : key };
   
 
-  fetch('http://localhost:9093/atech-api/testKey.php', {
+  fetch('http://atech-info.com/atech-api/testKey.php', {
     method: 'POST', // or 'PUT'
     headers: {'Content-Type':'application/x-www-form-urlencoded'},
     body: queryString.stringify(data),
