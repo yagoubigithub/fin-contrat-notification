@@ -6,15 +6,13 @@ const methode = User.prototype;
 
 function User() {
  // db.run(`DROP TABLE user` )
-// db.run(`DROP TABLE licence` )
+//db.run(`DROP TABLE licence` )
 
 
   db.run(`CREATE TABLE IF NOT EXISTS user (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username BLOB ,
-        password BLOB 
-        
-       
+        password BLOB   
     )`);
     db.run(`CREATE TABLE IF NOT EXISTS licence (
       id INTEGER PRIMARY KEY AUTOINCREMENT,

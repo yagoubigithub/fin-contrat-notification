@@ -208,7 +208,7 @@ function Employee() {
         // Change how to handle the file content
         converter.csv2json(data,(err,array)=>{
 
-      
+          const values= []
           new Promise((resolve, reject)=>{
            
             console.log(array[0])
@@ -217,13 +217,17 @@ function Employee() {
               deleteEmployee().then(()=>{
                 let sql = `INSERT INTO employee(nom ,  prenom , adresse, telephone, email , date_debut , date_fin ,  status ) VALUES   `;
               let count = 0;
+            
                 array.forEach((e) => {
             
-                  const placeholder = ` ('${e.nom}', '${e.prenom}' , '${e.adresse}' , '${e.telephone}' , '${e.email}' , '${e.date_debut}' , '${e.date_fin}' ,'undo') ,`;
+                  const placeholder = ` (?, ? , ? , ? , ? , ? , ? ,?) ,`;
                   sql = sql + placeholder;
                   count++;
+                  values.push(e.nom,e.prenom,e.adresse,e.telephone,e.email,e.date_debut,e.date_fin,'undo')
       
-                  if(count === array.length) {resolve(sql)}
+                  if(count === array.length) {
+                    console.log(values)
+                    resolve(sql);}
                 })
               }).catch(err=>{
                 mainWindow.webContents.send("employee:readFile", err);
@@ -233,9 +237,8 @@ function Employee() {
             }
             
           }).then((sql)=>{
-            console.log(sql)
             sql = sql.slice(0, sql.lastIndexOf(",") - 1);
-            db.run(sql , (err)=>{
+            db.run(sql,values , (err)=>{
             
               if(err)  mainWindow.webContents.send("employee:readFile", err);
               setTimeout(()=>{

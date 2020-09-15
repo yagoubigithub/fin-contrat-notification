@@ -64,20 +64,25 @@ import TaskBar from '../TaskBar';
     render() {
         return (
             <Dialog fullScreen open={true}>
-        
+       { /*
         <Dialog fullScreen open={this.state.key.length === 0}>
-        <h1>Enter Licence</h1>
-        <form onSubmit={this.testKey}>
+        <TaskBar />
+        <div className="key-container">
+   <h1> La clé de la license</h1>
+        <form onSubmit={this.testKey} style={{textAlign : "center"}}>
         {this.state.error_key !== "" && this.state.error_key !== "Enter Key" ? <div className="error">{this.state.error_key}</div> : null}
         
           
-               <input className="input-auth"   onChange={this.handleChange} name="key_entred" type="password" placeholder="Clé" />
+               <input className="input-auth"   onChange={this.handleChange} name="key_entred"  type="text" placeholder="Clé" />
+               <br />
                <input type="submit" className="button-auth" value="Valider"/>
              
         </form>
+        </div>
+     
           
         </Dialog>
-       
+      */ }
             <TaskBar/>
      <div> 
      <img src={logo} width="300" height="300" style={{display : "block",margin : "auto", marginTop : 50}}/>

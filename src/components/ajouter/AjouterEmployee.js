@@ -112,7 +112,7 @@ class AjouterEmployee extends Component {
             
        
                
-            <Grid container spacing={2} style={{padding : 10}}>
+            <Grid container spacing={2} style={{padding : 10,overflow : "auto"}}>
            
                <Grid item xs={6}>
             <h3 style={{ margin: 0 }}>Nom * </h3>
